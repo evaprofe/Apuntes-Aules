@@ -1,9 +1,10 @@
 ---
-layout: doc
-sidebar: true
----
 
+
+---
 # UD.1 Práctica Guiada: Configuración de un Entorno de Desarrollo Moderno con Docker y Laravel
+
+(Contenidos de Guillermo Garrido adaptados por Eva Mária Gómez Abad- Curso 2025-2026)
 
 ## Objetivo
 
@@ -17,7 +18,7 @@ Antes de comenzar, es fundamental entender por qué adoptamos este modelo:
 - **Entorno de Desarrollo Unificado**: Todas las herramientas de línea de comandos (CLI), lenguajes y servidores residirán en un entorno Unix-like (WSL/Ubuntu en Windows, o la terminal nativa en macOS y Linux). Esto nos brinda potencia y compatibilidad.
 - **Docker y Laravel Sail para Proyectos Aislados**: Cada proyecto se ejecutará en su propio conjunto de contenedores Docker. Esto garantiza que los proyectos no interfieran entre sí y que el entorno de desarrollo sea idéntico al de producción, eliminando el clásico problema de "en mi máquina funcionaba".
 
------
+---
 
 ## FASE 1: Cimentando las Bases (Terminal, Herramientas y Docker)
 
@@ -840,24 +841,24 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
     .hero-gradient {
         background: linear-gradient(135deg, #6997ca 0%, #4b7db2 100%);
     }
-    
+
     .product-card {
         transition: all 0.3s ease;
     }
-    
+
     .product-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
-    
+
     .category-badge {
         background: linear-gradient(135deg, #63d1c1 0%, #41b8a5 100%);
     }
-    
+
     .stock-indicator {
         position: relative;
     }
-    
+
     .stock-indicator::before {
         content: '';
         position: absolute;
@@ -868,27 +869,27 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
         height: 6px;
         border-radius: 50%;
     }
-    
+
     .stock-indicator.in-stock::before {
         background-color: #10b981;
     }
-    
+
     .stock-indicator.low-stock::before {
         background-color: #ef4444;
     }
-    
+
     .dark-mode-toggle {
         transition: all 0.3s ease;
     }
-    
+
     .dark-mode-toggle:hover {
         transform: scale(1.1);
     }
-    
+
     .mobile-menu {
         animation: slideDown 0.3s ease-out;
     }
-    
+
     @keyframes slideDown {
         from {
             opacity: 0;
@@ -948,7 +949,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                     <div class="flex items-center space-x-4">
                         <a href="/" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition">🛍️ Mi Tienda</a>
                     </div>
-                    
+
                     <!-- Navegación desktop -->
                     <nav class="hidden lg:flex space-x-8">
                         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 transition">Inicio</a>
@@ -957,7 +958,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 transition">Ofertas</a>
                         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 transition">Contacto</a>
                     </nav>
-                    
+
                      <!-- Botones desktop -->
                      <div class="hidden lg:flex items-center space-x-4">
                          <button class="text-gray-700 dark:text-gray-300 hover:text-primary-600 transition">
@@ -974,7 +975,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                              🌙
                          </button>
                      </div>
-                    
+
                     <!-- Botones móvil/tablet -->
                     <div class="flex items-center space-x-2 lg:hidden">
                         <!-- Botón de modo oscuro -->
@@ -989,7 +990,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                         </button>
                     </div>
                 </div>
-                
+
                     <!-- Menú móvil -->
                     <div id="mobileMenu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700 mobile-menu">
                     <nav class="flex flex-col space-y-4 pt-4">
@@ -1021,7 +1022,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                     Bienvenido a Mi Tienda
                 </h2>
                 <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                    Descubre una amplia variedad de productos de calidad. 
+                    Descubre una amplia variedad de productos de calidad.
                     Encuentra lo que buscas al mejor precio.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
@@ -1042,7 +1043,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                     Nuestras Categorías
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    
+
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 product-card cursor-pointer">
                         <div class="text-4xl text-primary-500 mb-4">📦</div>
                         <h4 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Categoría 1</h4>
@@ -1098,7 +1099,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                     Productos Destacados
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
+
                     <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden product-card">
                         <div class="h-48 bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
                             <span class="text-4xl">📦</span>
@@ -1199,11 +1200,11 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
              function toggleDarkMode() {
                  document.documentElement.classList.toggle('dark');
                  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
-                 
+
                  // Cambiar el icono según el modo para ambos botones
                  const toggleButton = document.getElementById('darkModeToggle');
                  const toggleButtonDesktop = document.getElementById('darkModeToggleDesktop');
-                 
+
                  if (document.documentElement.classList.contains('dark')) {
                      if (toggleButton) toggleButton.innerHTML = '☀️';
                      if (toggleButtonDesktop) toggleButtonDesktop.innerHTML = '☀️';
@@ -1217,9 +1218,9 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
             function toggleMobileMenu() {
                 const mobileMenu = document.getElementById('mobileMenu');
                 const menuToggle = document.getElementById('mobileMenuToggle');
-                
+
                 mobileMenu.classList.toggle('hidden');
-                
+
                 // Cambiar el icono del botón
                 if (mobileMenu.classList.contains('hidden')) {
                     menuToggle.innerHTML = `
@@ -1245,7 +1246,7 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
                      if (toggleButton) toggleButton.innerHTML = '☀️';
                      if (toggleButtonDesktop) toggleButtonDesktop.innerHTML = '☀️';
                  }
-                 
+
                  // Configurar los botones
                  const toggleButton = document.getElementById('darkModeToggle');
                  const toggleButtonDesktop = document.getElementById('darkModeToggleDesktop');
@@ -1275,12 +1276,12 @@ Al ejecutar el status nos mostrará que "tablas" estan creadas en MySQL.
     Si vuelves a ir al `localhost`, deberías ver tu aplicación Laravel en funcionamiento con los estilos personalizados aplicados.
 
     > [!CAUTION] Captura de pantalla requerida
-    > **Personaliza tu Welcome:**  
-    > Elige una temática para tu tienda online (por ejemplo: librería, tienda de ropa, electrónica, productos ecológicos, etc.).  
+    > **Personaliza tu Welcome:**
+    > Elige una temática para tu tienda online (por ejemplo: librería, tienda de ropa, electrónica, productos ecológicos, etc.).
     >
-    > Sustituye todos los datos estáticos del ejemplo (nombre de la tienda, secciones, productos, datos de contacto, redes sociales, etc.) por información relacionada con la temática que hayas elegido.  
+    > Sustituye todos los datos estáticos del ejemplo (nombre de la tienda, secciones, productos, datos de contacto, redes sociales, etc.) por información relacionada con la temática que hayas elegido.
     >
-    > **No modifiques la estructura HTML ni el CSS**, solo cambia los textos, imágenes y datos para que reflejen tu tienda personalizada.  
+    > **No modifiques la estructura HTML ni el CSS**, solo cambia los textos, imágenes y datos para que reflejen tu tienda personalizada.
     >
     > Ejemplo: Si eliges una tienda de libros, cambia "Mi Tienda" por el nombre de tu librería, los productos por libros, los datos de contacto por los tuyos, etc.
     >
@@ -1628,7 +1629,7 @@ Laravel Telescope es una herramienta de depuración para Laravel que te permite 
     .✓...........................
     ───────────────────────────────────────────────────────── Laravel
     FIXED .................................................... 29 files, 1 style issue fixed
-    ✓ app/Models/User.php   
+    ✓ app/Models/User.php
     ```
 
     :::
@@ -1696,4 +1697,7 @@ Para completar esta práctica, debes entregar un **PDF** que incluya las siguien
 
 ### **🔗 Plataforma de Entrega**
 
-**Entrega en Aules**
+**Entrega en Aules**cd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
+git push -u origin maincd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
+git branch backup-maincd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
+git branch backup-main

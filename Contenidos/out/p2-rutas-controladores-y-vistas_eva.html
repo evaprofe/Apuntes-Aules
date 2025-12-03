@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>UD&period;2 Pr&aacute;ctica Guiada&colon; Rutas&comma; Controladores y Vistas</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <hr>
+<h2 id="layout-docsidebar-true">layout: doc
+sidebar: true</h2>
+<h1 id="ud2-práctica-guiada-rutas-controladores-y-vistas">UD.2 Práctica Guiada: Rutas, Controladores y Vistas</h1>
+<p>(Prácticas de Guillermo Garrido modificadas por Eva María Gómez Abad - Curso  2025-2026)</p>
+<h2 id="objetivo">Objetivo</h2>
+<p>El objetivo de esta práctica es construir una tienda online completa utilizando Laravel, implementando el patrón MVC (Modelo-Vista-Controlador). Se crearán rutas públicas, controladores para manejar la lógica de negocio y vistas Blade para mostrar los datos de forma dinámica.</p>
+<h3 id="filosofía-de-trabajo">Filosofía de Trabajo</h3>
+<p>Esta práctica está diseñada para ser genérica y personalizable. A partir de la temática elegida en la práctica anterior se adaptaran todos los nombres, categorías y productos según el tipo de tienda.</p>
+<hr>
+<h2 id="fase-1-iniciar-el-entorno-de-desarrollo">FASE 1: Iniciar el Entorno de Desarrollo</h2>
+<h3 id="1-arrancar-los-contenedores-de-laravel-sail"><strong>1. Arrancar los Contenedores de Laravel Sail</strong></h3>
+<p>Antes de comenzar a trabajar en el código, es fundamental que el entorno de desarrollo esté funcionando correctamente.</p>
+<p>Asegúrate de que Laravel Sail esté ejecutándose:</p>
+<pre><code class="language-bash">sail up -d
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ sail up -d
+[+] Running 7/7
+ ✔ sail-8.4/app                     Built                          0.0s
+ ✔ Network myshop_sail              Created                        0.0s
+ ✔ Volume myshop_sail-redis         Created                        0.0s
+ ✔ Volume myshop_sail-mysql         Created                        0.0s
+ ✔ Container myshop-mysql-1         Started                        0.8s
+ ✔ Container myshop-redis-1         Started                        0.8s
+ ✔ Container myshop-laravel.test-1  Started                        1.0s
+</code></pre>
+<p>:::</p>
+<h3 id="2-verificar-que-la-aplicación-funciona"><strong>2. Verificar que la Aplicación Funciona</strong></h3>
+<p>Abre tu navegador y accede a <code>http://localhost</code>. Deberías ver la página de bienvenida de Laravel que creaste en la práctica anterior.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Importante</p><p>Si los contenedores no arrancan correctamente, revisa que Docker esté ejecutándose y que no haya otros servicios usando los puertos 80, 3306 o 6379.</p>
+</div>
+<h2 id="fase-2-crear-los-archivos-de-datos-mock">FASE 2: Crear los Archivos de Datos Mock</h2>
+<h3 id="1-crear-el-directorio-de-datos-mock"><strong>1. Crear el Directorio de Datos Mock</strong></h3>
+<p>Hemos decidido estructurar los datos mock como un <strong>array de arrays</strong> (una <strong>Matriz</strong>) en PHP porque esta estructura es sencilla y fácil de manipular. Cada elemento del array principal representa una entidad (por ejemplo, una categoría o un producto) y se identifica por su clave numérica o por su ID. Dentro de cada elemento, se utiliza un array asociativo para almacenar los diferentes atributos de la entidad (como <code>id</code>, <code>name</code>, <code>description</code>, etc.). Esta forma de organización facilita la lectura, la búsqueda y la modificación de los datos mock durante el desarrollo.</p>
+<p>En este proyecto, vamos a crear varios archivos de datos mock para centralizar la información de prueba. Los principales mocks que vamos a crear son:</p>
+<ul>
+<li><strong>mock-categories.php</strong>: Contendrá las categorías de productos.</li>
+<li><strong>mock-products.php</strong>: Incluirá los productos de la tienda.</li>
+<li><strong>mock-offers.php</strong>: Definirá las ofertas disponibles para los productos.</li>
+<li><strong>mock-cart.php</strong>: Simulará el estado del carrito de compras.</li>
+</ul>
+<p>Todos estos archivos estarán ubicados en el directorio <code>database/data/</code> para mantenerlos organizados y accesibles.</p>
+<p>Crea el directorio <code>database/data/</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p database/data
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p database/data
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">ls</span> -la database/
+total 20
+drwxrwxr-x 4 ggarrido ggarrido 4096 ene 15 10:30 .
+drwxrwxr-x 8 ggarrido ggarrido 4096 ene 15 10:30 ..
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:30 data
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:30 factories
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:30 migrations
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:30 seeders
+</code></pre>
+<p>:::</p>
+<h3 id="2-crear-el-archivo-de-categorías"><strong>2. Crear el Archivo de Categorías</strong></h3>
+<p>Los diferentes atributos de una categoría suelen ser:</p>
+<ul>
+<li><strong>id</strong>: Identificador único de la categoría.</li>
+<li><strong>name</strong>: Nombre de la categoría.</li>
+<li><strong>slug</strong>: Identificador amigable para URLs (por ejemplo, &quot;electronica&quot;, &quot;ropa-hombre&quot;).</li>
+<li><strong>description</strong>: Descripción breve de la categoría.</li>
+</ul>
+<p>Opcionalmente, se pueden añadir otros atributos como:</p>
+<ul>
+<li><strong>image</strong>: Ruta o URL de una imagen representativa de la categoría.</li>
+<li><strong>parent_id</strong>: Si la categoría es hija de otra, este campo indica la categoría padre.</li>
+<li><strong>created_at / updated_at</strong>: Fechas de creación y actualización (si se requiere control de cambios).</li>
+</ul>
+<p>Crea el archivo <code>database/data/mock-categories.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> database/data/mock-categories.php
+</code></pre>
+<p>Añade el código:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-number">1</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Categoría 1&#x27;</span>,
+        <span class="hljs-string">&#x27;slug&#x27;</span> =&gt; <span class="hljs-string">&#x27;categoria-1&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción de la categoría 1&#x27;</span>
+    ],
+    <span class="hljs-number">2</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">2</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Categoría 2&#x27;</span>,
+        <span class="hljs-string">&#x27;slug&#x27;</span> =&gt; <span class="hljs-string">&#x27;categoria-2&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción de la categoría 2&#x27;</span>
+    ],
+    <span class="hljs-number">3</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">3</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Categoría 3&#x27;</span>,
+        <span class="hljs-string">&#x27;slug&#x27;</span> =&gt; <span class="hljs-string">&#x27;categoria-3&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción de la categoría 3&#x27;</span>
+    ],
+    <span class="hljs-number">4</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">4</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Categoría 4&#x27;</span>,
+        <span class="hljs-string">&#x27;slug&#x27;</span> =&gt; <span class="hljs-string">&#x27;categoria-4&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción de la categoría 4&#x27;</span>
+    ],
+    <span class="hljs-number">5</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">5</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Categoría 5&#x27;</span>,
+        <span class="hljs-string">&#x27;slug&#x27;</span> =&gt; <span class="hljs-string">&#x27;categoria-5&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción de la categoría 5&#x27;</span>
+    ]
+];
+</code></pre>
+<p>:::</p>
+<h3 id="3-crear-el-archivo-de-ofertas"><strong>3. Crear el Archivo de Ofertas</strong></h3>
+<p>Los atributos principales de una oferta suelen ser:</p>
+<ul>
+<li><strong>id</strong>: Identificador único de la oferta.</li>
+<li><strong>name</strong>: Nombre de la oferta (por ejemplo, &quot;Descuento Primavera&quot;).</li>
+<li><strong>slug</strong>: Identificador amigable para URLs (por ejemplo, &quot;descuento-primavera&quot;).</li>
+<li><strong>discount_percentage</strong>: Porcentaje de descuento que aplica la oferta (por ejemplo, 20 para un 20% de descuento).</li>
+<li><strong>description</strong>: Descripción breve de la oferta, explicando sus condiciones o beneficios.</li>
+</ul>
+<p>Opcionalmente, puedes añadir otros atributos como:</p>
+<ul>
+<li><strong>start_date</strong>: Fecha de inicio de la oferta.</li>
+<li><strong>end_date</strong>: Fecha de finalización de la oferta.</li>
+<li><strong>active</strong>: Indica si la oferta está activa o no.</li>
+<li><strong>product_ids</strong>: Lista de IDs de productos a los que aplica la oferta.</li>
+</ul>
+<p>Crea el archivo <code>database/data/mock-offers.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> database/data/mock-offers.php
+</code></pre>
+<p>Añade el código:</p>
+<p>::: details Código PHP  -ToDo</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-comment">//ToDo</span>
+;
+</code></pre>
+<p>:::</p>
+<h3 id="4-crear-el-archivo-de-carrito-cart-items"><strong>4. Crear el Archivo de Carrito (Cart Items)</strong></h3>
+<p>En esta práctica, vamos a simular un carrito de compras sencillo donde todos los items pertenecen a un único usuario/sesión global. Esto simplifica la lógica y permite centrarnos en el patrón MVC sin añadir complejidad de gestión de usuarios.</p>
+<p><strong>Estructura del carrito:</strong></p>
+<ul>
+<li><strong>id</strong>: Identificador único del item en el carrito</li>
+<li><strong>product_id</strong>: ID del producto añadido al carrito</li>
+<li><strong>quantity</strong>: Cantidad de unidades de ese producto</li>
+<li><strong>added_at</strong>: Fecha y hora en la que se añadió el producto</li>
+</ul>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Importante</p><p>En esta práctica NO gestionamos usuarios ni sesiones. En la práctica de autenticación se añadirá <code>user_id</code> para gestionar carritos de múltiples usuarios.</p>
+</div>
+<p>Crea el archivo <code>database/data/mock-cart.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> database/data/mock-cart.php
+</code></pre>
+<p>Añade el código:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-comment">// Simulación de items en el carrito (carrito único/global)</span>
+<span class="hljs-comment">// Todos los items pertenecen al mismo carrito</span>
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-number">1</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;product_id&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;quantity&#x27;</span> =&gt; <span class="hljs-number">2</span>,
+        <span class="hljs-string">&#x27;added_at&#x27;</span> =&gt; <span class="hljs-string">&#x27;2025-01-15 10:30:00&#x27;</span>
+    ],
+    <span class="hljs-number">2</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">2</span>,
+        <span class="hljs-string">&#x27;product_id&#x27;</span> =&gt; <span class="hljs-number">3</span>,
+        <span class="hljs-string">&#x27;quantity&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;added_at&#x27;</span> =&gt; <span class="hljs-string">&#x27;2025-01-15 11:15:00&#x27;</span>
+    ],
+    <span class="hljs-number">3</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">3</span>,
+        <span class="hljs-string">&#x27;product_id&#x27;</span> =&gt; <span class="hljs-number">5</span>,
+        <span class="hljs-string">&#x27;quantity&#x27;</span> =&gt; <span class="hljs-number">4</span>,
+        <span class="hljs-string">&#x27;added_at&#x27;</span> =&gt; <span class="hljs-string">&#x27;2025-01-15 12:00:00&#x27;</span>
+    ]
+];
+</code></pre>
+<p>:::</p>
+<h3 id="5-crear-el-archivo-de-productos"><strong>5. Crear el Archivo de Productos</strong></h3>
+<p>A continuación se explican los atributos que debe tener cada producto en el archivo <code>mock-products.php</code>:</p>
+<ul>
+<li><strong>id</strong>: Identificador único del producto</li>
+<li><strong>name</strong>: Nombre del producto que se mostrará en la tienda</li>
+<li><strong>description</strong>: Breve descripción del producto</li>
+<li><strong>price</strong>: Precio del producto (puede ser decimal)</li>
+<li><strong>category_id</strong>: Identificador de la categoría a la que pertenece el producto</li>
+<li><strong>offer_id</strong>: ID de la oferta aplicable a este producto (puede ser <code>null</code> si no tiene oferta)</li>
+</ul>
+<p>Puedes añadir más atributos personalizados según la temática de tu tienda, por ejemplo: autor, ISBN, talla, color, marca, stock, imagen, etc.</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Reglas de negocio importantes</p><p></p>
+<ul>
+<li><strong>Una oferta</strong> puede aplicarse a <strong>múltiples productos</strong> (relación 1:N)</li>
+<li><strong>Un producto</strong> solo puede tener <strong>una oferta activa</strong> a la vez (o ninguna)</li>
+<li>No todos los productos tienen ofertas (en ese caso <code>offer_id</code> es <code>null</code>)</li>
+</ul>
+</div>
+<p>Crea el archivo <code>database/data/mock-products.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> database/data/mock-products.php
+</code></pre>
+<p>Añade el código:</p>
+<p>::: details Código PHP-ToDo</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-number">1</span> =&gt; [
+        <span class="hljs-string">&#x27;id&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-string">&#x27;Producto 1&#x27;</span>,
+        <span class="hljs-string">&#x27;description&#x27;</span> =&gt; <span class="hljs-string">&#x27;Descripción del producto 1&#x27;</span>,
+        <span class="hljs-string">&#x27;price&#x27;</span> =&gt; <span class="hljs-number">29.99</span>,
+        <span class="hljs-string">&#x27;category_id&#x27;</span> =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">&#x27;offer_id&#x27;</span> =&gt; <span class="hljs-number">1</span>  <span class="hljs-comment">// Tiene la oferta 1 (20% descuento)</span>
+    ],
+    <span class="hljs-comment">//ToDo.Completa tus ofertas</span>
+];
+</code></pre>
+<p>:::</p>
+<div class="markdown-alert markdown-alert-caution"><p class="markdown-alert-title"><svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Captura de pantalla requerida</p><p>Realiza una captura de pantalla de tus archivos de datos mock (<code>database/data/products.php</code>, <code>categories.php</code>, <code>offers.php</code>, etc.) <strong>ajustados a la temática que elegiste</strong> (por ejemplo, libros, ropa, electrónica, etc.). La captura debe mostrar claramente cómo personalizaste los nombres, descripciones y campos de los productos, categorías y ofertas según tu temática. Incluye tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible.</p>
+</div>
+<h2 id="fase-3-crear-el-trait-para-cargar-datos-mock">FASE 3: Crear el Trait para Cargar Datos Mock</h2>
+<h3 id="1-crear-el-trait-loadsmockdata"><strong>1. Crear el Trait LoadsMockData</strong></h3>
+<p>En esta sección vamos a crear un Trait llamado <code>LoadsMockData</code> que nos permitirá cargar fácilmente los datos simulados (mock) de categorías, ofertas, productos y carrito desde los archivos PHP ubicados en <code>database/data/</code>.</p>
+<p>Este Trait será utilizado en los controladores para acceder a los datos de ejemplo sin necesidad de una base de datos real, facilitando así el desarrollo y las pruebas de la tienda online.</p>
+<p>El objetivo es centralizar la carga de datos mock y reutilizar este código en cualquier controlador que lo necesite.</p>
+<p>Además, este Trait incluirá un método helper llamado <code>enrichProductsWithOffers()</code> que será fundamental para preparar los datos antes de enviarlos a las vistas. Este método:</p>
+<ol>
+<li><strong>Enriquece cada producto</strong> con los datos completos de su oferta (nombre, porcentaje de descuento)</li>
+<li><strong>Calcula el precio final</strong> aplicando el descuento correspondiente</li>
+<li><strong>Evita hardcodear valores</strong> en las vistas y componentes</li>
+</ol>
+<p>De esta forma, el componente <code>ProductCard</code> recibirá toda la información necesaria sin necesidad de hacer cálculos ni búsquedas en la vista.</p>
+<p>Crea el directorio <code>app/Traits/</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p app/Traits
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p app/Traits
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">ls</span> -la app/
+total 20
+drwxrwxr-x 8 ggarrido ggarrido 4096 ene 15 10:35 .
+drwxrwxr-x 8 ggarrido ggarrido 4096 ene 15 10:35 ..
+drwxrwxr-x 3 ggarrido ggarrido 4096 ene 15 10:35 Console
+drwxrwxr-x 3 ggarrido ggarrido 4096 ene 15 10:35 Exceptions
+drwxrwxr-x 3 ggarrido ggarrido 4096 ene 15 10:35 Http
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:35 Models
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:35 Providers
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:35 Traits
+</code></pre>
+<p>:::</p>
+<p>Crea el archivo <code>app/Traits/LoadsMockData.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> app/Traits/LoadsMockData.php
+</code></pre>
+<p>Añade el código:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Traits</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">trait</span> <span class="hljs-title">LoadsMockData</span>
+</span>{
+    <span class="hljs-comment">/**
+     * Load categories from mock file
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCategories</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">require</span> <span class="hljs-title function_ invoke__">database_path</span>(<span class="hljs-string">&#x27;data/mock-categories.php&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Load offers from mock file
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getOffers</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">require</span> <span class="hljs-title function_ invoke__">database_path</span>(<span class="hljs-string">&#x27;data/mock-offers.php&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Load cart from mock file
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCart</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">require</span> <span class="hljs-title function_ invoke__">database_path</span>(<span class="hljs-string">&#x27;data/mock-cart.php&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Load products from mock file
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getProducts</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">require</span> <span class="hljs-title function_ invoke__">database_path</span>(<span class="hljs-string">&#x27;data/mock-products.php&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Load all mock data at once
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAllMockData</span>(<span class="hljs-params"></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-keyword">return</span> [
+            <span class="hljs-string">&#x27;categories&#x27;</span> =&gt; <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCategories</span>(),
+            <span class="hljs-string">&#x27;offers&#x27;</span> =&gt; <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getOffers</span>(),
+            <span class="hljs-string">&#x27;cart&#x27;</span> =&gt; <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCart</span>(),
+            <span class="hljs-string">&#x27;products&#x27;</span> =&gt; <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>(),
+        ];
+    }
+
+    <span class="hljs-comment">/**
+     * Enrich products with their offer data and calculate final price
+     * This method adds &#x27;offer&#x27; and &#x27;final_price&#x27; to each product that has an offer
+     */</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">enrichProductsWithOffers</span>(<span class="hljs-params"><span class="hljs-keyword">array</span> <span class="hljs-variable">$products</span></span>): <span class="hljs-title">array</span>
+    </span>{
+        <span class="hljs-variable">$offers</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getOffers</span>();
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">array_map</span>(function(<span class="hljs-variable">$product</span>) <span class="hljs-keyword">use</span> ($<span class="hljs-title">offers</span>) {
+            // <span class="hljs-title">Add</span> <span class="hljs-title">offer</span> <span class="hljs-title">data</span> <span class="hljs-title">if</span> <span class="hljs-title">product</span> <span class="hljs-title">has</span> <span class="hljs-title">an</span> <span class="hljs-title">offer</span>
+            <span class="hljs-title">if</span> ($<span class="hljs-title">product</span>[&#x27;<span class="hljs-title">offer_id</span>&#x27;] !== <span class="hljs-title">null</span> &amp;&amp; <span class="hljs-title">isset</span>($<span class="hljs-title">offers</span>[$<span class="hljs-title">product</span>[&#x27;<span class="hljs-title">offer_id</span>&#x27;]])) {
+                $<span class="hljs-title">offer</span> = $<span class="hljs-title">offers</span>[$<span class="hljs-title">product</span>[&#x27;<span class="hljs-title">offer_id</span>&#x27;]];
+                <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;offer&#x27;</span>] = <span class="hljs-variable">$offer</span>;
+
+                <span class="hljs-comment">// Calculate final price with discount</span>
+                <span class="hljs-variable">$discount</span> = <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;price&#x27;</span>] * (<span class="hljs-variable">$offer</span>[<span class="hljs-string">&#x27;discount_percentage&#x27;</span>] / <span class="hljs-number">100</span>);
+                <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;final_price&#x27;</span>] = <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;price&#x27;</span>] - <span class="hljs-variable">$discount</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;offer&#x27;</span>] = <span class="hljs-literal">null</span>;
+                <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;final_price&#x27;</span>] = <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;price&#x27;</span>];
+            }
+
+            <span class="hljs-keyword">return</span> <span class="hljs-variable">$product</span>;
+        }, <span class="hljs-variable">$products</span>);
+    }
+}
+</code></pre>
+<p>:::</p>
+<h2 id="fase-4-crear-los-controladores">FASE 4: Crear los Controladores</h2>
+<h3 id="1-generar-los-controladores"><strong>1. Generar los Controladores</strong></h3>
+<p>En esta fase vamos a crear los siguientes controladores, cada uno con una responsabilidad clara dentro de la arquitectura MVC de nuestra tienda online:</p>
+<ul>
+<li>
+<p><strong>WelcomeController</strong>: Este controlador gestionará la página de inicio (welcome) de la tienda online. Mostrará contenido destacado, información general y enlaces a las diferentes secciones principales de la tienda.</p>
+</li>
+<li>
+<p><strong>ProductController</strong>: Se encargará de gestionar todo lo relacionado con los productos. Mostrará la página principal con el listado de productos, el detalle de un producto concreto y permitirá filtrar productos por categoría si es necesario.</p>
+</li>
+<li>
+<p><strong>CategoryController</strong>: Este controlador gestionará las categorías de productos. Permitirá mostrar todos los productos de una categoría específica y navegar entre diferentes categorías.</p>
+</li>
+<li>
+<p><strong>OfferController</strong>: Su función será mostrar la información de las ofertas disponibles y, si se desea, filtrar productos que tengan una oferta concreta.</p>
+</li>
+<li>
+<p><strong>CartController</strong>: Se encargará de la gestión del carrito de la compra. Mostrará el estado actual del carrito, los productos añadidos, cantidades y permitirá ver el detalle de un carrito específico.</p>
+</li>
+</ul>
+<p>Cada uno de estos controladores nos ayudará a organizar la lógica de la aplicación, facilitando el mantenimiento y la escalabilidad del proyecto.</p>
+<p>Ejecuta los siguientes comandos en la terminal:</p>
+<pre><code class="language-bash">sail artisan make:controller WelcomeController
+sail artisan make:controller ProductController --resource
+sail artisan make:controller CategoryController
+sail artisan make:controller OfferController
+sail artisan make:controller CartController
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ sail artisan make:controller WelcomeController
+Controller created successfully.
+
+ggarrido@mi-equipo:~/development/laravel/MyShop$ sail artisan make:controller ProductController --resource
+Controller created successfully.
+
+ggarrido@mi-equipo:~/development/laravel/MyShop$ sail artisan make:controller CategoryController
+Controller created successfully.
+
+ggarrido@mi-equipo:~/development/laravel/MyShop$ sail artisan make:controller OfferController
+Controller created successfully.
+
+ggarrido@mi-equipo:~/development/laravel/MyShop$ sail artisan make:controller CartController
+Controller created successfully.
+</code></pre>
+<p>:::</p>
+<h3 id="2-implementar-welcomecontroller"><strong>2. Implementar WelcomeController</strong></h3>
+<p>Este controlador maneja la página de bienvenida (<code>/</code>) que ya creamos en la práctica 1. Su función principal es cargar los datos necesarios para mostrar:</p>
+<ul>
+<li><strong>Categorías destacadas</strong>: Las primeras 4 categorías de productos</li>
+<li><strong>Productos destacados</strong>: Los primeros 3 productos con datos de ofertas para mostrar en la sección de destacados</li>
+</ul>
+<p>Abre el archivo <code>app/Http/Controllers/WelcomeController.php</code> y reemplaza su contenido:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Http</span>\<span class="hljs-title class_">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Traits</span>\<span class="hljs-title">LoadsMockData</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WelcomeController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">use</span> <span class="hljs-title">LoadsMockData</span>;
+
+    <span class="hljs-comment">/**
+     * Show the welcome page with featured content
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+        <span class="hljs-variable">$categories</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCategories</span>();
+
+        <span class="hljs-comment">// Enrich products with offer data before slicing</span>
+        <span class="hljs-variable">$enrichedProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>(<span class="hljs-variable">$products</span>);
+
+        <span class="hljs-comment">// Get featured products (first 3 products for the featured section)</span>
+        <span class="hljs-variable">$featuredProducts</span> = <span class="hljs-title function_ invoke__">array_slice</span>(<span class="hljs-variable">$enrichedProducts</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-literal">true</span>);
+
+        <span class="hljs-comment">// Get featured categories (first 4 categories for the categories section)</span>
+        <span class="hljs-variable">$featuredCategories</span> = <span class="hljs-title function_ invoke__">array_slice</span>(<span class="hljs-variable">$categories</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-literal">true</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;welcome&#x27;</span>, <span class="hljs-title function_ invoke__">compact</span>(<span class="hljs-string">&#x27;featuredProducts&#x27;</span>, <span class="hljs-string">&#x27;featuredCategories&#x27;</span>));
+    }
+}
+</code></pre>
+<p>:::</p>
+<h3 id="3-implementar-productcontroller-resource"><strong>3. Implementar ProductController (Resource)</strong></h3>
+<p>El <code>ProductController</code> es un controlador de recurso en Laravel que gestiona todas las operaciones relacionadas con los productos de la tienda online. Al ser un controlador de recurso, implementa los métodos estándar del patrón CRUD (Crear, Leer, Actualizar, Eliminar).</p>
+<h4 id="métodos-implementados-en-productcontroller">Métodos implementados en <code>ProductController</code></h4>
+<ul>
+<li><strong>index()</strong>: Muestra un listado de todos los productos. <strong>Optimizado</strong>: Carga solo productos y los enriquece con ofertas usando <code>enrichProductsWithOffers()</code>. No carga categorías ni carrito innecesarios.</li>
+<li><strong>onSale()</strong>: Muestra solo los productos que tienen una oferta activa. Enriquece productos con ofertas y filtra donde <code>offer !== null</code>. <strong>Este método se usa para el botón &quot;🏷️ Ofertas Especiales&quot;.</strong></li>
+<li><strong>create()</strong>: Muestra el formulario para crear un nuevo producto. En este ejemplo, simplemente redirige a la lista de productos con un mensaje simulado.</li>
+<li><strong>store(Request $request)</strong>: Procesa el formulario de creación de un producto. Por ahora, solo redirige a la lista de productos sin guardar nada realmente.</li>
+<li><strong>show($id)</strong>: Muestra el detalle de un producto específico. <strong>Optimizado</strong>: Carga solo el producto específico y su categoría. El producto se enriquece con datos de su oferta.</li>
+<li><strong>edit($id)</strong>: Muestra el formulario para editar un producto existente. En este ejemplo, solo redirige a la lista de productos con un mensaje simulado.</li>
+<li><strong>update(Request $request, $id)</strong>: Procesa el formulario de edición de un producto. Actualmente, solo redirige a la lista de productos sin modificar nada.</li>
+<li><strong>destroy($id)</strong>: Elimina un producto. En este ejemplo, simplemente redirige a la lista de productos con un mensaje simulado.</li>
+</ul>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Nota</p><p>En esta fase, la mayoría de los métodos no tienen lógica real de persistencia, ya que los datos se gestionan mediante archivos mock y no se guardan cambios. Más adelante, cuando se conecte con una base de datos real, estos métodos implementarán la funcionalidad completa.</p>
+</div>
+<p>A continuación, se muestra la implementación completa del <code>ProductController</code> con todos los métodos mencionados, utilizando los datos mock para simular el comportamiento de la tienda.</p>
+<p>Abre el archivo <code>app/Http/Controllers/ProductController.php</code> y reemplaza su contenido:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Http</span>\<span class="hljs-title class_">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Traits</span>\<span class="hljs-title">LoadsMockData</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProductController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">use</span> <span class="hljs-title">LoadsMockData</span>;
+
+    <span class="hljs-comment">/**
+     * Display a listing of the resource.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+
+        <span class="hljs-comment">// Enrich products with offer data and calculate final prices</span>
+        <span class="hljs-variable">$enrichedProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>(<span class="hljs-variable">$products</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;products.index&#x27;</span>, [<span class="hljs-string">&#x27;products&#x27;</span> =&gt; <span class="hljs-variable">$enrichedProducts</span>]);
+    }
+
+    <span class="hljs-comment">/**
+     * Display only products that have an active offer
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onSale</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+        <span class="hljs-variable">$enrichedProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>(<span class="hljs-variable">$products</span>);
+
+        <span class="hljs-comment">// Filter only products with offers</span>
+        <span class="hljs-variable">$productsOnSale</span> = <span class="hljs-title function_ invoke__">array_filter</span>(<span class="hljs-variable">$enrichedProducts</span>, function(<span class="hljs-variable">$product</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;offer&#x27;</span>] !== <span class="hljs-literal">null</span>;
+        });
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;products.index&#x27;</span>, [<span class="hljs-string">&#x27;products&#x27;</span> =&gt; <span class="hljs-variable">$productsOnSale</span>]);
+    }
+
+    <span class="hljs-comment">/**
+     * Show the form for creating a new resource.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span>(<span class="hljs-params"></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se mostraría un formulario para crear un nuevo producto.</span>
+        <span class="hljs-comment">// En este ejemplo, simplemente redirigimos a la lista de productos.</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;products.index&#x27;</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Formulario de creación de producto (simulado)&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Store a newly created resource in storage.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">store</span>(<span class="hljs-params">Request <span class="hljs-variable">$request</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se guardaría en la base de datos</span>
+        <span class="hljs-comment">// Por ahora, solo redirigimos a la lista de productos</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;products.index&#x27;</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Producto creado exitosamente&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Display the specified resource.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-comment">// Validate ID format</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$id</span>) || <span class="hljs-variable">$id</span> &lt; <span class="hljs-number">1</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;ID de producto inválido&#x27;</span>);
+        }
+
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+
+        <span class="hljs-comment">// Find product by ID</span>
+        <span class="hljs-variable">$product</span> = <span class="hljs-variable">$products</span>[<span class="hljs-variable">$id</span>] ?? <span class="hljs-literal">null</span>;
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$product</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;Producto no encontrado&#x27;</span>);
+        }
+
+        <span class="hljs-comment">// Enrich product with offer data</span>
+        <span class="hljs-variable">$enrichedProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>([<span class="hljs-variable">$id</span> =&gt; <span class="hljs-variable">$product</span>]);
+        <span class="hljs-variable">$product</span> = <span class="hljs-variable">$enrichedProducts</span>[<span class="hljs-variable">$id</span>];
+
+        <span class="hljs-comment">// Get product category</span>
+        <span class="hljs-variable">$categories</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCategories</span>();
+        <span class="hljs-variable">$category</span> = <span class="hljs-variable">$categories</span>[<span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;category_id&#x27;</span>]] ?? <span class="hljs-literal">null</span>;
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;products.show&#x27;</span>, <span class="hljs-title function_ invoke__">compact</span>(<span class="hljs-string">&#x27;product&#x27;</span>, <span class="hljs-string">&#x27;category&#x27;</span>));
+    }
+
+    <span class="hljs-comment">/**
+     * Show the form for editing the specified resource.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">edit</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se obtendrían los datos del producto correspondiente al id recibido,</span>
+        <span class="hljs-comment">// así como las listas necesarias (por ejemplo, categorías, ofertas, etc.) para mostrarlas en un formulario de edición.</span>
+        <span class="hljs-comment">// En este ejemplo, simplemente redirigimos al detalle del producto.</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;products.show&#x27;</span>, <span class="hljs-variable">$id</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Producto editado&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Update the specified resource in storage.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span>(<span class="hljs-params">Request <span class="hljs-variable">$request</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se actualizaría en la base de datos</span>
+        <span class="hljs-comment">// Por ahora, solo redirigimos al detalle del producto</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;products.show&#x27;</span>, <span class="hljs-variable">$id</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Producto actualizado exitosamente&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Remove the specified resource from storage.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">destroy</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se eliminaría de la base de datos</span>
+        <span class="hljs-comment">// Por ahora, solo redirigimos a la lista de productos</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;products.index&#x27;</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Producto eliminado exitosamente&#x27;</span>);
+    }
+}
+</code></pre>
+<p>:::</p>
+<h3 id="4-implementar-categorycontroller"><strong>4. Implementar CategoryController</strong></h3>
+<p>El <code>CategoryController</code> es el encargado de gestionar todas las operaciones relacionadas con las categorías de productos en la tienda online. Su función principal es mostrar el listado de categorías y los productos asociados a cada una de ellas.</p>
+<h4 id="métodos-implementados-en-categorycontroller">Métodos implementados en <code>CategoryController</code></h4>
+<ul>
+<li>
+<p><strong>index()</strong>: Este método muestra un listado de todas las categorías disponibles en la tienda. Es útil para que el usuario pueda navegar por las diferentes categorías.</p>
+</li>
+<li>
+<p><strong>show($id)</strong>: Muestra todos los productos de una categoría específica. Si la categoría no existe, devuelve un error 404.</p>
+</li>
+</ul>
+<p>En resumen, el <code>CategoryController</code> organiza y facilita la navegación por categorías y sus productos. Esto mejora la experiencia del usuario al explorar el catálogo de la tienda online.</p>
+<p>Abre el archivo <code>app/Http/Controllers/CategoryController.php</code> y reemplaza su contenido:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Http</span>\<span class="hljs-title class_">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Traits</span>\<span class="hljs-title">LoadsMockData</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CategoryController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">use</span> <span class="hljs-title">LoadsMockData</span>;
+
+    <span class="hljs-comment">/**
+     * Show all categories
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$categories</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCategories</span>();
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;categories.index&#x27;</span>, [<span class="hljs-string">&#x27;categories&#x27;</span> =&gt; <span class="hljs-variable">$categories</span>]);
+    }
+
+    <span class="hljs-comment">/**
+     * Show products from a specific category
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-comment">// Validate ID format</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$id</span>) || <span class="hljs-variable">$id</span> &lt; <span class="hljs-number">1</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;ID de categoría inválido&#x27;</span>);
+        }
+
+        <span class="hljs-variable">$categories</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCategories</span>();
+
+        <span class="hljs-comment">// Find category by ID</span>
+        <span class="hljs-variable">$category</span> = <span class="hljs-variable">$categories</span>[<span class="hljs-variable">$id</span>] ?? <span class="hljs-literal">null</span>;
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$category</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;Categoría no encontrada&#x27;</span>);
+        }
+
+        <span class="hljs-comment">// Load and enrich products</span>
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+
+        <span class="hljs-comment">// Filter products by category</span>
+        <span class="hljs-variable">$categoryProducts</span> = <span class="hljs-title function_ invoke__">array_filter</span>(<span class="hljs-variable">$products</span>, function(<span class="hljs-variable">$product</span>) <span class="hljs-keyword">use</span> ($<span class="hljs-title">id</span>) {
+            <span class="hljs-title">return</span> $<span class="hljs-title">product</span>[&#x27;<span class="hljs-title">category_id</span>&#x27;] == $<span class="hljs-title">id</span>;
+        });
+
+        <span class="hljs-variable">$categoryProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>(<span class="hljs-variable">$categoryProducts</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;categories.show&#x27;</span>, <span class="hljs-title function_ invoke__">compact</span>(<span class="hljs-string">&#x27;category&#x27;</span>, <span class="hljs-string">&#x27;categoryProducts&#x27;</span>));
+    }
+}
+</code></pre>
+<p>:::</p>
+<h3 id="5-implementar-offercontroller"><strong>5. Implementar OfferController</strong></h3>
+<p>El <code>OfferController</code> es el encargado de gestionar las operaciones relacionadas con las ofertas disponibles en la tienda online. Su función principal es mostrar el listado de todas las ofertas y permitir visualizar los productos asociados a una oferta concreta.</p>
+<h4 id="métodos-implementados-en-offercontroller">Métodos implementados en <code>OfferController</code></h4>
+<ul>
+<li>
+<p><strong>index()</strong>: Muestra un listado de todas las ofertas disponibles.</p>
+</li>
+<li>
+<p><strong>show($id)</strong>: Muestra el detalle de una oferta específica y los productos que tienen esa oferta.</p>
+</li>
+</ul>
+<p>A continuación, se muestra la implementación completa del <code>OfferController</code> con los métodos mencionados, utilizando los datos mock para simular el comportamiento de la tienda.</p>
+<p>Abre el archivo <code>app/Http/Controllers/OfferController.php</code> y reemplaza su contenido:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Http</span>\<span class="hljs-title class_">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Traits</span>\<span class="hljs-title">LoadsMockData</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OfferController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">use</span> <span class="hljs-title">LoadsMockData</span>;
+
+    <span class="hljs-comment">/**
+     * Show all offers
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$offers</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getOffers</span>();
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;offers.index&#x27;</span>, [<span class="hljs-string">&#x27;offers&#x27;</span> =&gt; <span class="hljs-variable">$offers</span>]);
+    }
+
+    <span class="hljs-comment">/**
+     * Show products with a specific offer
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-comment">// Validate ID format</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_ invoke__">is_numeric</span>(<span class="hljs-variable">$id</span>) || <span class="hljs-variable">$id</span> &lt; <span class="hljs-number">1</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;ID de oferta inválido&#x27;</span>);
+        }
+
+        <span class="hljs-variable">$offers</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getOffers</span>();
+
+        <span class="hljs-comment">// Find offer by ID</span>
+        <span class="hljs-variable">$offer</span> = <span class="hljs-variable">$offers</span>[<span class="hljs-variable">$id</span>] ?? <span class="hljs-literal">null</span>;
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-variable">$offer</span>) {
+            <span class="hljs-title function_ invoke__">abort</span>(<span class="hljs-number">404</span>, <span class="hljs-string">&#x27;Oferta no encontrada&#x27;</span>);
+        }
+
+        <span class="hljs-comment">// Load and enrich products</span>
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+
+        <span class="hljs-comment">// Filter products by offer (un producto solo puede tener una oferta)</span>
+        <span class="hljs-variable">$offerProducts</span> = <span class="hljs-title function_ invoke__">array_filter</span>(<span class="hljs-variable">$products</span>, function(<span class="hljs-variable">$product</span>) <span class="hljs-keyword">use</span> ($<span class="hljs-title">id</span>) {
+            <span class="hljs-title">return</span> $<span class="hljs-title">product</span>[&#x27;<span class="hljs-title">offer_id</span>&#x27;] == $<span class="hljs-title">id</span>;
+        });
+
+        <span class="hljs-variable">$offerProducts</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">enrichProductsWithOffers</span>(<span class="hljs-variable">$offerProducts</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;offers.show&#x27;</span>, <span class="hljs-title function_ invoke__">compact</span>(<span class="hljs-string">&#x27;offer&#x27;</span>, <span class="hljs-string">&#x27;offerProducts&#x27;</span>));
+    }
+}
+</code></pre>
+<p>:::</p>
+<h3 id="6-implementar-cartcontroller"><strong>6. Implementar CartController</strong></h3>
+<p>El <code>CartController</code> es el encargado de gestionar todas las operaciones relacionadas con el carrito de la compra en la tienda online. Su función principal es mostrar el estado actual del carrito, permitiendo al usuario ver los productos añadidos, sus cantidades y detalles, así como visualizar la información de un producto específico dentro del carrito.</p>
+<h4 id="métodos-implementados-en-cartcontroller">Métodos implementados en <code>CartController</code></h4>
+<ul>
+<li>
+<p><strong>index()</strong>: Este método muestra un resumen del carrito de la compra, incluyendo los productos añadidos, sus nombres y precios. Es útil para que el usuario pueda revisar el contenido de su carrito antes de finalizar la compra.</p>
+</li>
+<li>
+<p><strong>store(Request $request)</strong>: Este método añade un nuevo producto al carrito. Valida que la cantidad sea un número entre 0 y 99. En una aplicación real, guardaría el producto en la sesión o base de datos del carrito.</p>
+</li>
+<li>
+<p><strong>update(Request $request, $id)</strong>: Este método actualiza la cantidad de un producto existente en el carrito. Valida que la cantidad sea un número entre 0 y 99. Si la cantidad es 0, se eliminaría el producto del carrito.</p>
+</li>
+</ul>
+<p>En resumen, el <code>CartController</code> facilita la gestión del carrito de la compra, permitiendo añadir productos y actualizar cantidades con validación adecuada.</p>
+<p>Abre el archivo <code>app/Http/Controllers/CartController.php</code> y reemplaza su contenido:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">Http</span>\<span class="hljs-title class_">Controllers</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Traits</span>\<span class="hljs-title">LoadsMockData</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Request</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CartController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+</span>{
+    <span class="hljs-keyword">use</span> <span class="hljs-title">LoadsMockData</span>;
+
+    <span class="hljs-comment">/**
+     * Show cart overview
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>
+    </span>{
+        <span class="hljs-variable">$cart</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getCart</span>();
+        <span class="hljs-variable">$products</span> = <span class="hljs-variable language_">$this</span>-&gt;<span class="hljs-title function_ invoke__">getProducts</span>();
+
+        <span class="hljs-comment">// Add product names to cart data</span>
+        <span class="hljs-variable">$cartWithProducts</span> = [];
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-variable">$cart</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">$item</span>) {
+            <span class="hljs-variable">$product</span> = <span class="hljs-variable">$products</span>[<span class="hljs-variable">$item</span>[<span class="hljs-string">&#x27;product_id&#x27;</span>]] ?? <span class="hljs-literal">null</span>;
+            <span class="hljs-variable">$cartWithProducts</span>[] = <span class="hljs-title function_ invoke__">array_merge</span>(<span class="hljs-variable">$item</span>, [
+                <span class="hljs-string">&#x27;name&#x27;</span> =&gt; <span class="hljs-variable">$product</span> ? <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;name&#x27;</span>] : <span class="hljs-string">&#x27;Producto no encontrado&#x27;</span>,
+                <span class="hljs-string">&#x27;price&#x27;</span> =&gt; <span class="hljs-variable">$product</span> ? <span class="hljs-variable">$product</span>[<span class="hljs-string">&#x27;price&#x27;</span>] : <span class="hljs-number">0</span>
+            ]);
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;cart.index&#x27;</span>, [
+            <span class="hljs-string">&#x27;cartItems&#x27;</span> =&gt; <span class="hljs-variable">$cartWithProducts</span>
+        ]);
+    }
+
+    <span class="hljs-comment">/**
+     * Store a newly created cart item
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">store</span>(<span class="hljs-params">Request <span class="hljs-variable">$request</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se guardaría el producto en el carrito</span>
+        <span class="hljs-comment">// Por ahora, solo redirigimos al carrito con un mensaje</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;cart.index&#x27;</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Producto añadido al carrito exitosamente&#x27;</span>);
+    }
+
+    <span class="hljs-comment">/**
+     * Update the specified cart item
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span>(<span class="hljs-params">Request <span class="hljs-variable">$request</span>, <span class="hljs-keyword">string</span> <span class="hljs-variable">$id</span></span>)
+    </span>{
+        <span class="hljs-comment">// En una aplicación real, aquí se actualizaría la cantidad del producto en el carrito</span>
+        <span class="hljs-comment">// Por ahora, solo redirigimos al carrito con un mensaje</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">redirect</span>()-&gt;<span class="hljs-title function_ invoke__">route</span>(<span class="hljs-string">&#x27;cart.index&#x27;</span>)
+            -&gt;<span class="hljs-title function_ invoke__">with</span>(<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;Cantidad actualizada exitosamente&#x27;</span>);
+    }
+}
+</code></pre>
+<p>:::</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Controladores Resource vs Individuales</p><p></p>
+<p>En esta práctica mostramos ambos enfoques:</p>
+<ul>
+<li><strong>ProductController</strong>: Es un controlador <strong>resource</strong> con todos los métodos CRUD (<code>index</code>, <code>create</code>, <code>store</code>, <code>show</code>, <code>edit</code>, <code>update</code>, <code>destroy</code>)</li>
+<li><strong>CategoryController, OfferController, CartController</strong>: Son controladores <strong>individuales</strong> con métodos específicos para funcionalidades concretas</li>
+<li><strong>WelcomeController</strong>: Es un controlador <strong>individual</strong> para la página de bienvenida</li>
+</ul>
+<p><strong>¿Cuándo usar cada uno?</strong></p>
+<ul>
+<li><strong>Resource</strong>: Cuando necesitas operaciones CRUD completas (como productos)</li>
+<li><strong>Individual</strong>: Cuando solo necesitas funcionalidades específicas (como mostrar categorías o ofertas)</li>
+</ul>
+<p>En el futuro algunos controladores cambiarán completando los métodos para convertirse en un <code>controlador resource</code>.</p>
+</div>
+<h2 id="fase-5-definir-las-rutas-públicas">FASE 5: Definir las Rutas Públicas</h2>
+<p>Ahora que tenemos los controladores creados, podemos definir las rutas que conectarán las URLs con estos controladores.</p>
+<h3 id="1-explicación-de-las-rutas"><strong>1. Explicación de las Rutas</strong></h3>
+<p>En esta práctica, vamos a definir varias rutas públicas en el archivo <code>routes/web.php</code> para cubrir las necesidades básicas de una tienda online. Cada ruta conecta una URL con un controlador específico que se encargará de la lógica correspondiente.</p>
+<p>Las rutas que vamos a crear son:</p>
+<ul>
+<li><strong>Ruta principal (<code>/</code>)</strong>: Muestra la página de inicio con productos y categorías destacados</li>
+<li><strong>Lista de productos (<code>/products</code>)</strong>: Muestra todos los productos disponibles</li>
+<li><strong>Productos en oferta (<code>/products-on-sale</code>)</strong>: Muestra solo los productos que tienen oferta activa</li>
+<li><strong>Detalle de producto (<code>/products/{id}</code>)</strong>: Permite ver la información completa de un producto concreto</li>
+<li><strong>Lista de categorías (<code>/categories</code>)</strong>: Muestra todas las categorías disponibles</li>
+<li><strong>Detalle de categoría (<code>/categories/{id}</code>)</strong>: Muestra todos los productos de una categoría específica</li>
+<li><strong>Lista de ofertas (<code>/offers</code>)</strong>: Muestra todas las ofertas disponibles</li>
+<li><strong>Detalle de oferta (<code>/offers/{id}</code>)</strong>: Muestra información sobre una oferta específica y sus productos</li>
+<li><strong>Carrito de la compra (<code>/cart</code>)</strong>: Permite ver y gestionar el carrito</li>
+<li><strong>Contacto (<code>/contact</code>)</strong>: Página de contacto</li>
+</ul>
+<h3 id="2-configurar-las-rutas-en-routeswebphp"><strong>2. Configurar las Rutas en <code>routes/web.php</code></strong></h3>
+<p>Abre el archivo <code>routes/web.php</code> y reemplaza el contenido por las siguientes rutas:</p>
+<p>::: details Código de las rutas</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Support</span>\<span class="hljs-title">Facades</span>\<span class="hljs-title">Route</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\<span class="hljs-title">WelcomeController</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\<span class="hljs-title">ProductController</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\<span class="hljs-title">CategoryController</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\<span class="hljs-title">OfferController</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">App</span>\<span class="hljs-title">Http</span>\<span class="hljs-title">Controllers</span>\<span class="hljs-title">CartController</span>;
+
+<span class="hljs-comment">/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/</span>
+
+<span class="hljs-comment">// Welcome page - shows home page with featured content</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, [<span class="hljs-title class_">WelcomeController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;index&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;welcome&#x27;</span>);
+
+<span class="hljs-comment">// Contact page</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/contact&#x27;</span>, function () {
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;contact&#x27;</span>);
+})-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;contact&#x27;</span>);
+
+<span class="hljs-comment">// Category routes</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/categories&#x27;</span>, [<span class="hljs-title class_">CategoryController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;index&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;categories.index&#x27;</span>);
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/categories/{id}&#x27;</span>, [<span class="hljs-title class_">CategoryController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;show&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;categories.show&#x27;</span>);
+
+<span class="hljs-comment">// Cart routes</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/cart&#x27;</span>, [<span class="hljs-title class_">CartController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;index&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;cart.index&#x27;</span>);
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">post</span>(<span class="hljs-string">&#x27;/cart&#x27;</span>, [<span class="hljs-title class_">CartController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;store&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;cart.store&#x27;</span>);
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">put</span>(<span class="hljs-string">&#x27;/cart/{id}&#x27;</span>, [<span class="hljs-title class_">CartController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;update&#x27;</span>])
+    -&gt;<span class="hljs-title function_ invoke__">where</span>(<span class="hljs-string">&#x27;id&#x27;</span>, <span class="hljs-string">&#x27;[0-9]+&#x27;</span>)
+    -&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;cart.update&#x27;</span>);
+
+<span class="hljs-comment">// Special route for products on sale (must be BEFORE resource routes to avoid conflicts)</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">get</span>(<span class="hljs-string">&#x27;/products-on-sale&#x27;</span>, [<span class="hljs-title class_">ProductController</span>::<span class="hljs-variable language_">class</span>, <span class="hljs-string">&#x27;onSale&#x27;</span>])-&gt;<span class="hljs-title function_ invoke__">name</span>(<span class="hljs-string">&#x27;products.on-sale&#x27;</span>);
+
+<span class="hljs-comment">// Resource routes - Example with products (creates all CRUD routes automatically)</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">resource</span>(<span class="hljs-string">&#x27;products&#x27;</span>, <span class="hljs-title class_">ProductController</span>::<span class="hljs-variable language_">class</span>);
+
+<span class="hljs-comment">// OfferController: only index y show</span>
+<span class="hljs-title class_">Route</span>::<span class="hljs-title function_ invoke__">resource</span>(<span class="hljs-string">&#x27;offers&#x27;</span>, <span class="hljs-title class_">OfferController</span>::<span class="hljs-variable language_">class</span>)-&gt;<span class="hljs-title function_ invoke__">only</span>([<span class="hljs-string">&#x27;index&#x27;</span>, <span class="hljs-string">&#x27;show&#x27;</span>]);
+</code></pre>
+<p>:::</p>
+<h3 id="3-verificar-las-rutas"><strong>3. Verificar las Rutas</strong></h3>
+<p>Puedes verificar que todas las rutas se han creado correctamente ejecutando:</p>
+<pre><code class="language-bash">sail artisan route:list
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">  GET|HEAD  / ........................................ welcome › WelcomeController@index
+  GET|HEAD  cart ..................................... cart.index › CartController@index
+  POST      cart ..................................... cart.store › CartController@store
+  PUT       cart/{<span class="hljs-built_in">id</span>} ................................ cart.update › CartController@update
+  GET|HEAD  categories ............................... categories.index › CategoryController@index
+  GET|HEAD  categories/{<span class="hljs-built_in">id</span>} .......................... categories.show › CategoryController@show
+  GET|HEAD  contact .................................. contact
+  GET|HEAD  offers ................................... offers.index › OfferController@index
+  GET|HEAD  offers/{offer} ........................... offers.show › OfferController@show
+  GET|HEAD  products ................................. products.index › ProductController@index
+  POST      products ................................. products.store › ProductController@store
+  GET|HEAD  products-on-sale ......................... products.on-sale › ProductController@onSale
+  GET|HEAD  products/create .......................... products.create › ProductController@create
+  GET|HEAD  products/{product} ....................... products.show › ProductController@show
+  PUT|PATCH products/{product} ....................... products.update › ProductController@update
+  DELETE    products/{product} ....................... products.destroy › ProductController@destroy
+  GET|HEAD  products/{product}/edit .................. products.edit › ProductController@edit
+</code></pre>
+<p>:::</p>
+<p>Este comando mostrará una tabla con todas las rutas disponibles, sus métodos HTTP, URIs y los controladores/acciones asociados.</p>
+<div class="markdown-alert markdown-alert-caution"><p class="markdown-alert-title"><svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Captura de pantalla requerida</p><p>Realiza una captura de pantalla de tu terminal mostrando:</p>
+<p>La salida del comando <code>sail artisan route:list</code> similar a la del ejemplo sin las rutas de <code>telescope</code></p>
+<p>La captura debe incluir tu prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible.</p>
+</div>
+<h2 id="fase-6-crear-el-sistema-de-layouts-partials-y-componentes">FASE 6: Crear el Sistema de Layouts, Partials y Componentes</h2>
+<h3 id="1-crear-la-estructura-de-directorios"><strong>1. Crear la Estructura de Directorios</strong></h3>
+<p>Vamos a implementar un <strong>sistema híbrido moderno</strong> que combina lo mejor de tres enfoques complementarios:</p>
+<ul>
+<li><strong>Layout maestro</strong>: Define la estructura general de la página (HTML, head, body) y permite incluir contenido dinámico mediante secciones (<code>@yield</code>, <code>@section</code>). Es como el &quot;esqueleto&quot; de todas las páginas.</li>
+<li><strong>Partials</strong>: Son fragmentos HTML simples para elementos fijos como el head, header, footer, navegación, etc. Útiles para elementos que no necesitan lógica compleja.</li>
+<li><strong>Componentes Blade</strong>: Permiten encapsular bloques de interfaz reutilizables y parametrizables (tarjetas de producto, alertas, botones, etc.). Son como &quot;piezas de LEGO&quot; que se pueden combinar y personalizar.</li>
+</ul>
+<p>Crea la estructura de directorios:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p resources/views/layouts
+<span class="hljs-built_in">mkdir</span> -p resources/views/partials
+<span class="hljs-built_in">mkdir</span> -p resources/views/components
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/layouts
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/partials
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/components
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">ls</span> -la resources/views/
+total 20
+drwxrwxr-x 5 ggarrido ggarrido 4096 ene 15 10:40 .
+drwxrwxr-x 5 ggarrido ggarrido 4096 ene 15 10:40 ..
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:40 components
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:40 layouts
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:40 partials
+-rw-rw-r-- 1 ggarrido ggarrido 1234 ene 15 10:40 welcome.blade.php
+</code></pre>
+<p>:::</p>
+<h3 id="2-crear-los-partials-elementos-fijos"><strong>2. Crear los Partials (Elementos Fijos)</strong></h3>
+<p>Primero creamos los partials para los elementos que se mantienen fijos en todas las páginas. Los partials son fragmentos HTML simples que se incluyen en el layout maestro.</p>
+<h4 id="21-head-partial"><strong>2.1. Head Partial</strong></h4>
+<p>Este partial <code>head.blade.php</code> contendrá las etiquetas meta principales, el título de la página (usando <code>@yield('title')</code> para que cada vista pueda cambiarlo), la inclusión de TailwindCSS y la configuración de colores personalizados, así como un stack para estilos adicionales (<code>@stack('styles')</code>). Es decir, aquí se centralizan los elementos del <code>&lt;head&gt;</code> que serán comunes a todas las páginas.</p>
+<p>Crea el archivo <code>resources/views/partials/head.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/partials/head.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>@yield(&#x27;title&#x27;, &#x27;Mi Tienda Online&#x27;)<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+        tailwind.<span class="hljs-property">config</span> = {
+            <span class="hljs-attr">theme</span>: {
+                <span class="hljs-attr">extend</span>: {
+                    <span class="hljs-attr">colors</span>: {
+                        <span class="hljs-attr">primary</span>: {
+                            <span class="hljs-number">500</span>: <span class="hljs-string">&#x27;#3b82f6&#x27;</span>,
+                            <span class="hljs-number">600</span>: <span class="hljs-string">&#x27;#2563eb&#x27;</span>,
+                            <span class="hljs-number">700</span>: <span class="hljs-string">&#x27;#1d4ed8&#x27;</span>,
+                        }
+                    }
+                }
+            }
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    @stack(&#x27;styles&#x27;)
+</code></pre>
+<p>:::</p>
+<h4 id="22-header-partial"><strong>2.2. Header Partial</strong></h4>
+<p>Este partial <code>header.blade.php</code> contendrá el encabezado principal del sitio, incluyendo el logo, la navegación principal (que se incluirá mediante el partial <code>navigation.blade.php</code>) y el acceso al carrito de compras. Su objetivo es proporcionar una barra superior consistente en todas las páginas, facilitando la navegación y el acceso rápido al carrito.</p>
+<p>Crea el archivo <code>resources/views/partials/header.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/partials/header.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html"><span class="hljs-comment">&lt;!-- Header con navegación --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">header</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white shadow-lg relative&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-4&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-center justify-between&quot;</span>&gt;</span>
+                <span class="hljs-comment">&lt;!-- Logo --&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-center space-x-4&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;welcome&#x27;) }}&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-primary-600&quot;</span>&gt;</span>
+                        🛍️ Mi Tienda
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+            <span class="hljs-comment">&lt;!-- Navegación usando partial --&gt;</span>
+            @include(&#x27;partials.navigation&#x27;)
+
+                <span class="hljs-comment">&lt;!-- Carrito --&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-center space-x-4&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;cart.index&#x27;) }}&quot;</span>
+                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition&quot;</span>&gt;</span>
+                        🛒 Carrito (0)
+                <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h4 id="23-navigation-partial"><strong>2.3. Navigation Partial</strong></h4>
+<p>Este partial <code>navigation.blade.php</code> contendrá la barra de navegación principal del sitio. Incluirá enlaces a las secciones más importantes como Inicio, Productos, Categorías, Ofertas y Contacto. Además, resaltará el enlace activo según la ruta actual, facilitando la navegación y mejorando la experiencia del usuario.</p>
+<p>Crea el archivo <code>resources/views/partials/navigation.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/partials/navigation.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">nav</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hidden md:flex space-x-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;welcome&#x27;) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition {{ request()-&gt;routeIs(&#x27;welcome&#x27;) ? &#x27;text-primary-600 font-semibold&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        Inicio
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.index&#x27;) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition {{ request()-&gt;routeIs(&#x27;products.*&#x27;) ? &#x27;text-primary-600 font-semibold&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        Productos
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;categories.index&#x27;) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition {{ request()-&gt;routeIs(&#x27;categories.*&#x27;) ? &#x27;text-primary-600 font-semibold&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        Categorías
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;offers.index&#x27;) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition {{ request()-&gt;routeIs(&#x27;offers.*&#x27;) ? &#x27;text-primary-600 font-semibold&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        Ofertas
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;contact&#x27;) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-700 hover:text-primary-600 transition {{ request()-&gt;routeIs(&#x27;contact&#x27;) ? &#x27;text-primary-600 font-semibold&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        Contacto
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h4 id="24-footer-partial"><strong>2.4. Footer Partial</strong></h4>
+<p>Este partial contendrá el pie de página (footer) del sitio web. Incluirá información sobre la tienda, enlaces rápidos a las secciones principales (Inicio, Productos, Categorías, Contacto) y datos de contacto. Además, mostrará un mensaje de derechos reservados en la parte inferior.</p>
+<p>Crea el archivo <code>resources/views/partials/footer.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/partials/footer.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">    <span class="hljs-comment">&lt;!-- Footer --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">footer</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gray-800 text-white py-8 mt-12&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-3 gap-8&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h5</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl font-bold mb-4&quot;</span>&gt;</span>🛍️ Mi Tienda<span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-400&quot;</span>&gt;</span>
+                        Tu tienda de confianza para encontrar los mejores productos.
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h6</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;font-bold mb-4&quot;</span>&gt;</span>Enlaces Rápidos<span class="hljs-tag">&lt;/<span class="hljs-name">h6</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;space-y-2 text-gray-400&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;welcome&#x27;) }}&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hover:text-white transition&quot;</span>&gt;</span>Inicio<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.index&#x27;) }}&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hover:text-white transition&quot;</span>&gt;</span>Productos<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;categories.index&#x27;) }}&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hover:text-white transition&quot;</span>&gt;</span>Categorías<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hover:text-white transition&quot;</span>&gt;</span>Contacto<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h6</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;font-bold mb-4&quot;</span>&gt;</span>Contacto<span class="hljs-tag">&lt;/<span class="hljs-name">h6</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;space-y-2 text-gray-400&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>📞 Teléfono de contacto<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>📧 Email de contacto<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>🕒 Horario de atención<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border-t border-gray-700 mt-8 pt-8 text-center text-gray-400&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-symbol">&amp;copy;</span> 2025 Mi Tienda. Todos los derechos reservados.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">footer</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h3 id="3-crear-el-layout-maestro"><strong>3. Crear el Layout Maestro</strong></h3>
+<p>El layout maestro es la base de todas las páginas. Define la estructura HTML común y utiliza los partials para los elementos fijos.</p>
+<p>Crea el archivo <code>resources/views/layouts/app.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/layouts/app.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;es&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    @include(&#x27;partials.head&#x27;)
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gray-50&quot;</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- Header usando partial --&gt;</span>
+    @include(&#x27;partials.header&#x27;)
+
+    <span class="hljs-comment">&lt;!-- Contenido principal --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">main</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;min-h-screen&quot;</span>&gt;</span>
+        @yield(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- Footer usando partial --&gt;</span>
+    @include(&#x27;partials.footer&#x27;)
+
+    @stack(&#x27;scripts&#x27;)
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h3 id="4-crear-componentes-blade-para-elementos-reutilizables"><strong>4. Crear Componentes Blade para Elementos Reutilizables</strong></h3>
+<p>Los componentes Blade son la evolución moderna de los partials. Permiten crear elementos reutilizables que encapsulan su presentación y su lógica.</p>
+<p>Estos pueden reutilizarse gracias al uso de <strong>Props</strong>, que son datos que se pasan al componente dinámicamente (como parámetros de una función).</p>
+<h4 id="41-product-card-component"><strong>4.1. Product Card Component</strong></h4>
+<p>Este componente <code>ProductCard</code> es el componente más importante de la tienda. Contendrá la presentación de un producto individual en forma de tarjeta y se <strong>adaptará visualmente</strong> según si el producto tiene oferta o no.</p>
+<p>Crea el componente <code>ProductCard</code>:</p>
+<pre><code class="language-bash">sail artisan make:component ProductCard
+</code></pre>
+<p>Esto creará dos archivos:</p>
+<ul>
+<li><code>app/View/Components/ProductCard.php</code> (lógica del componente)</li>
+<li><code>resources/views/components/product-card.blade.php</code> (vista del componente)</li>
+</ul>
+<p><strong>Archivo <code>app/View/Components/ProductCard.php</code>:</strong></p>
+<p>En este archivo se define la lógica del componente <code>ProductCard</code>. Aquí se especifica qué propiedades (props) debe recibir el componente para funcionar correctamente. Por ejemplo, espera recibir un array con los datos del producto (<code>product</code>). Además, puede recibir una cadena (<code>class</code>) para personalizar las clases CSS y así adaptar el estilo del componente según sea necesario.</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">View</span>\<span class="hljs-title class_">Components</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Closure</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Contracts</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">Component</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProductCard</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span>
+</span>{
+    <span class="hljs-comment">/**
+     * Create a new component instance.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params">
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">array</span> <span class="hljs-variable">$product</span>,
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> <span class="hljs-variable">$class</span> = <span class="hljs-string">&#x27;&#x27;</span>
+    </span>) </span>{}
+
+    <span class="hljs-comment">/**
+     * Get the view / contents that represent the component.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>|<span class="hljs-title">Closure</span>|<span class="hljs-title">string</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;components.product-card&#x27;</span>);
+    }
+}
+</code></pre>
+<p>:::</p>
+<p><strong>Archivo <code>resources/views/components/product-card.blade.php</code>:</strong></p>
+<p>Este archivo <code>resources/views/components/product-card.blade.php</code> contendrá la vista del componente Blade <code>ProductCard</code>. Aquí se define la estructura HTML y el diseño visual de la tarjeta de producto, utilizando las propiedades (<code>$product</code>, <code>$class</code>) que recibe el componente.</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg overflow-hidden product-card {{ $class }} relative {{ $product[&#x27;offer&#x27;] !== null ? &#x27;ring-2 ring-orange-400&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- Badge de oferta destacado (esquina superior derecha) --&gt;</span>
+    @if($product[&#x27;offer&#x27;] !== null)
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-bl-lg font-bold shadow-lg z-10&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-lg&quot;</span>&gt;</span>
+                -{{ $product[&#x27;offer&#x27;][&#x27;discount_percentage&#x27;] }}%
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    @endif
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;h-48 bg-gray-200 flex items-center justify-center {{ $product[&#x27;offer&#x27;] !== null ? &#x27;bg-gradient-to-br from-orange-50 to-red-50&#x27; : &#x27;&#x27; }}&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl&quot;</span>&gt;</span>📦<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;p-6&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h4</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl font-bold mb-2 text-gray-900&quot;</span>&gt;</span>{{ $product[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-4&quot;</span>&gt;</span>{{ $product[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+        <span class="hljs-comment">&lt;!-- Badge de oferta adicional (nombre de la oferta) --&gt;</span>
+        @if($product[&#x27;offer&#x27;] !== null)
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-4&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;inline-block bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full font-semibold&quot;</span>&gt;</span>
+                    🏷️ {{ $product[&#x27;offer&#x27;][&#x27;name&#x27;] }}
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        @endif
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-center justify-between flex-wrap gap-2&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex flex-col&quot;</span>&gt;</span>
+                @if($product[&#x27;offer&#x27;] !== null)
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm text-gray-400 line-through&quot;</span>&gt;</span>€{{ number_format($product[&#x27;price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-orange-600&quot;</span>&gt;</span>€{{ number_format($product[&#x27;final_price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                @else
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-primary-600&quot;</span>&gt;</span>€{{ number_format($product[&#x27;price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                @endif
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.show&#x27;, $product[&#x27;id&#x27;]) }}&quot;</span>
+               <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition&quot;</span>&gt;</span>
+                Ver Detalles
+            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h4 id="42-category-card-component"><strong>4.2. Category Card Component</strong></h4>
+<p>Este componente <code>CategoryCard</code> contendrá la presentación de una categoría individual en forma de tarjeta. Mostrará información relevante de la categoría, como el nombre, la descripción, un icono representativo, y permitirá personalizar su apariencia mediante la prop <code>class</code>.</p>
+<p>Crea el componente <code>CategoryCard</code>:</p>
+<pre><code class="language-bash">sail artisan make:component CategoryCard
+</code></pre>
+<p><strong>Archivo <code>app/View/Components/CategoryCard.php</code>:</strong></p>
+<p>En este archivo se define la lógica del componente <code>CategoryCard</code> que tendrá un comportamiento similar al de <code>producto</code> visto previamente.</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title class_">App</span>\<span class="hljs-title class_">View</span>\<span class="hljs-title class_">Components</span>;
+
+<span class="hljs-keyword">use</span> <span class="hljs-title">Closure</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Contracts</span>\<span class="hljs-title">View</span>\<span class="hljs-title">View</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">View</span>\<span class="hljs-title">Component</span>;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CategoryCard</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span>
+</span>{
+    <span class="hljs-comment">/**
+     * Create a new component instance.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params">
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">array</span> <span class="hljs-variable">$category</span>,
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> <span class="hljs-variable">$class</span> = <span class="hljs-string">&#x27;&#x27;</span>
+    </span>) </span>{}
+
+    <span class="hljs-comment">/**
+     * Get the view / contents that represent the component.
+     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span>(<span class="hljs-params"></span>): <span class="hljs-title">View</span>|<span class="hljs-title">Closure</span>|<span class="hljs-title">string</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">view</span>(<span class="hljs-string">&#x27;components.category-card&#x27;</span>);
+    }
+}
+</code></pre>
+<p>:::</p>
+<p><strong>Archivo <code>resources/views/components/category-card.blade.php</code>:</strong></p>
+<p>Este archivo <code>resources/views/components/category-card.blade.php</code> contendrá la vista del componente Blade <code>CategoryCard</code>.</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg p-6 product-card cursor-pointer {{ $class }}&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl text-primary-500 mb-4&quot;</span>&gt;</span>📦<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h4</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl font-bold mb-2 text-gray-900&quot;</span>&gt;</span>{{ $category[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-4&quot;</span>&gt;</span>{{ $category[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;categories.show&#x27;, $category[&#x27;id&#x27;]) }}&quot;</span>
+       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-primary-600 font-semibold hover:text-primary-700 transition&quot;</span>&gt;</span>
+        Ver Productos →
+    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p>:::</p>
+<h2 id="fase-7-refactorizar-la-vista-welcome">FASE 7: Refactorizar la Vista Welcome</h2>
+<p>Ahora que tenemos nuestro sistema de layouts, partials y componentes, es el momento de <strong>refactorizar la vista <code>welcome.blade.php</code></strong> para que aproveche toda esta nueva arquitectura. Esto nos permitirá:</p>
+<ul>
+<li>Eliminar el código HTML duplicado (header, footer, etc.)</li>
+<li>Usar los componentes reutilizables que hemos creado</li>
+<li>Mantener un código más limpio y mantenible</li>
+<li>Integrar los datos dinámicos que vienen del controlador</li>
+</ul>
+<h3 id="1-actualizar-la-vista-welcome"><strong>1. Actualizar la Vista Welcome</strong></h3>
+<p>Vamos a reemplazar el contenido completo del archivo <code>welcome.blade.php</code> para que use el layout maestro, los componentes y los datos dinámicos del controlador.</p>
+<p>Abre el archivo <code>resources/views/welcome.blade.php</code> y reemplaza su contenido completo:</p>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Bienvenido - Mi Tienda&#x27;)
+
+@push(&#x27;styles&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+        <span class="hljs-selector-class">.hero-gradient</span> {
+            <span class="hljs-attribute">background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">135deg</span>, <span class="hljs-number">#667eea</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#764ba2</span> <span class="hljs-number">100%</span>);
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+@endpush
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-comment">&lt;!-- Hero Section --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hero-gradient text-white py-20&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 text-center&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl md:text-6xl font-extrabold leading-tight mb-6&quot;</span>&gt;</span>
+                Bienvenido a Mi Tienda
+            <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto&quot;</span>&gt;</span>
+                Descubre una amplia variedad de productos de calidad.
+                Encuentra lo que buscas al mejor precio.
+            <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex flex-wrap justify-center gap-4&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.index&#x27;) }}&quot;</span>
+                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white text-primary-600 font-bold py-4 px-8 rounded-full hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105&quot;</span>&gt;</span>
+                    Ver Productos
+                <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.on-sale&#x27;) }}&quot;</span>
+                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border-2 border-white text-white font-bold py-4 px-8 rounded-full hover:bg-white hover:text-primary-600 transition duration-300 ease-in-out&quot;</span>&gt;</span>
+                    🏷️ Ofertas Especiales
+                <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- Categorías Destacadas --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;py-16&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold mb-12 text-center text-gray-900&quot;</span>&gt;</span>
+                Nuestras Categorías
+            <span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8&quot;</span>&gt;</span>
+                @forelse($featuredCategories as $category)
+                    <span class="hljs-tag">&lt;<span class="hljs-name">x-category-card</span> <span class="hljs-attr">:category</span>=<span class="hljs-string">&quot;$category&quot;</span> /&gt;</span>
+                @empty
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-span-full text-center py-12&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay categorías disponibles.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                @endforelse
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- Productos Destacados --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;py-16 bg-gray-100&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold mb-12 text-center text-gray-900&quot;</span>&gt;</span>
+                Productos Destacados
+            <span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8&quot;</span>&gt;</span>
+                @forelse($featuredProducts as $product)
+                    <span class="hljs-tag">&lt;<span class="hljs-name">x-product-card</span> <span class="hljs-attr">:product</span>=<span class="hljs-string">&quot;$product&quot;</span> /&gt;</span>
+                @empty
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-span-full text-center py-12&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay productos destacados.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                @endforelse
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="2-verificar-el-funcionamiento"><strong>2. Verificar el Funcionamiento</strong></h3>
+<p>Una vez refactorizada la vista, verifica que todo funciona correctamente:</p>
+<ol>
+<li>Accede a <code>http://localhost</code> en tu navegador</li>
+<li>Deberías ver la página de inicio con:
+<ul>
+<li>Header y navegación funcional</li>
+<li>Hero section con botones que funcionan</li>
+<li>Las 4 primeras categorías de tus datos mock</li>
+<li>Los 3 primeros productos de tus datos mock</li>
+<li>Productos con oferta destacados visualmente</li>
+<li>Footer con enlaces</li>
+</ul>
+</li>
+<li>Haz clic en los enlaces de navegación para verificar que funcionan</li>
+</ol>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Nota importante</p><p>Si tu vista <code>welcome.blade.php</code> tenía personalizaciones adicionales (colores, iconos, textos específicos de tu temática), asegúrate de mantenerlas en la versión refactorizada. La estructura debe ser la misma, pero el contenido debe reflejar tu tienda personalizada.</p>
+</div>
+<h2 id="fase-8-crear-las-vistas-del-catálogo">FASE 8: Crear las Vistas del Catálogo</h2>
+<p>Ahora que tenemos nuestro sistema de layouts y componentes, y hemos refactorizado la vista principal, vamos a crear las vistas específicas para cada funcionalidad de la tienda. Cada vista se extiende del layout maestro y utiliza los componentes que hemos creado.</p>
+<h3 id="1-crear-directorios-de-vistas"><strong>1. Crear Directorios de Vistas</strong></h3>
+<p><strong>Objetivo</strong>: Organizar las vistas por funcionalidad para mantener el código limpio y fácil de mantener. Cada directorio corresponde a una entidad específica.</p>
+<p>Crea los directorios necesarios:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> -p resources/views/products
+<span class="hljs-built_in">mkdir</span> -p resources/views/categories
+<span class="hljs-built_in">mkdir</span> -p resources/views/offers
+<span class="hljs-built_in">mkdir</span> -p resources/views/cart
+</code></pre>
+<p>::: details Ejemplo de respuesta</p>
+<pre><code class="language-bash">ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/products
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/categories
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/offers
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">mkdir</span> -p resources/views/cart
+ggarrido@mi-equipo:~/development/laravel/MyShop$ <span class="hljs-built_in">ls</span> -la resources/views/
+total 20
+drwxrwxr-x 7 ggarrido ggarrido 4096 ene 15 10:45 .
+drwxrwxr-x 7 ggarrido ggarrido 4096 ene 15 10:45 ..
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 cart
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 categories
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 components
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 layouts
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 offers
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 partials
+drwxrwxr-x 2 ggarrido ggarrido 4096 ene 15 10:45 products
+-rw-rw-r-- 1 ggarrido ggarrido 1234 ene 15 10:40 welcome.blade.php
+</code></pre>
+<p>:::</p>
+<h3 id="2-vista-de-lista-de-productos"><strong>2. Vista de Lista de Productos</strong></h3>
+<p>Vamos a crear la vista principal del catálogo, encargada de mostrar todos los productos disponibles en la tienda. Esta vista aprovecha el sistema de layouts y componentes para mantener una estructura coherente y un código reutilizable y limpio.</p>
+<h4 id="cómo-funciona-esta-vista"><strong>¿Cómo funciona esta vista?</strong></h4>
+<ol>
+<li><strong>Extiende el layout maestro</strong>: Utiliza <code>@extends('layouts.app')</code> para heredar la estructura base de la aplicación, incluyendo el encabezado, pie de página y los estilos globales. Así, todas las páginas mantienen una apariencia uniforme.</li>
+<li><strong>Define un título personalizado</strong>: Mediante <code>@section('title', 'Todos los Productos - Mi Tienda')</code>, cada página puede establecer su propio título, mejorando la experiencia de usuario y el SEO.</li>
+<li><strong>Permite añadir estilos propios</strong>: Utiliza la directiva <code>@push('styles')</code> para incluir CSS específico de esta página, sin afectar a otras vistas.</li>
+<li><strong>Muestra datos dinámicos</strong>: Recibe la lista de productos desde el controlador y la recorre para mostrar cada uno. Así, el contenido se adapta automáticamente a los datos disponibles.</li>
+<li><strong>Utiliza componentes Blade</strong>: Cada producto se representa mediante el componente <code>&lt;x-product-card&gt;</code>, lo que facilita la reutilización y el mantenimiento del código, además de asegurar una presentación consistente.</li>
+<li><strong>Gestiona el caso de lista vacía</strong>: Si no hay productos para mostrar, la vista presenta un mensaje amigable al usuario, evitando espacios vacíos o confusión.</li>
+</ol>
+<p>Crea el archivo <code>resources/views/products/index.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/products/index.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Todos los Productos - Mi Tienda&#x27;)
+
+@push(&#x27;styles&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+        <span class="hljs-selector-class">.product-grid</span> {
+            <span class="hljs-attribute">display</span>: grid;
+            <span class="hljs-attribute">grid-template-columns</span>: <span class="hljs-built_in">repeat</span>(auto-fill, <span class="hljs-built_in">minmax</span>(<span class="hljs-number">300px</span>, <span class="hljs-number">1</span>fr));
+            <span class="hljs-attribute">gap</span>: <span class="hljs-number">2rem</span>;
+        }
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+@endpush
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>Todos los Productos<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600&quot;</span>&gt;</span>Descubre nuestra amplia gama de productos de calidad.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;product-grid&quot;</span>&gt;</span>
+        @forelse($products as $product)
+                <span class="hljs-tag">&lt;<span class="hljs-name">x-product-card</span> <span class="hljs-attr">:product</span>=<span class="hljs-string">&quot;$product&quot;</span> /&gt;</span>
+        @empty
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-span-full text-center py-12&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay productos disponibles.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        @endforelse
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="3-vista-de-detalle-de-producto"><strong>3. Vista de Detalle de Producto</strong></h3>
+<p>Esta vista está diseñada para mostrar de manera completa y atractiva toda la información relevante de un producto específico. Permite al usuario conocer en detalle las características del producto, visualizar las ofertas disponibles y realizar acciones relacionadas con la compra.</p>
+<p>Crea el archivo <code>resources/views/products/show.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/products/show.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, $product[&#x27;name&#x27;] . &#x27; - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 lg:grid-cols-2 gap-8&quot;</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- Imagen del Producto --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg p-6&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;h-96 bg-gray-200 flex items-center justify-center&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-8xl&quot;</span>&gt;</span>📦<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-comment">&lt;!-- Información del Producto --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg p-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>{{ $product[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-6&quot;</span>&gt;</span>{{ $product[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+            <span class="hljs-comment">&lt;!-- Precio --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-6&quot;</span>&gt;</span>
+                @if($product[&#x27;offer&#x27;] !== null)
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-baseline gap-3&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl text-gray-400 line-through&quot;</span>&gt;</span>€{{ number_format($product[&#x27;price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl font-bold text-orange-600&quot;</span>&gt;</span>€{{ number_format($product[&#x27;final_price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm text-orange-600 mt-2&quot;</span>&gt;</span>
+                        ¡Ahorra €{{ number_format($product[&#x27;price&#x27;] - $product[&#x27;final_price&#x27;], 2) }}!
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                @else
+                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl font-bold text-primary-600&quot;</span>&gt;</span>€{{ number_format($product[&#x27;price&#x27;], 2) }}<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                @endif
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+                <span class="hljs-comment">&lt;!-- Categoría --&gt;</span>
+                @if(isset($category))
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-6&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm text-gray-500&quot;</span>&gt;</span>Categoría:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;categories.show&#x27;, $category[&#x27;id&#x27;]) }}&quot;</span>
+                           <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ml-2 bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm hover:bg-primary-200 transition&quot;</span>&gt;</span>
+                            {{ $category[&#x27;name&#x27;] }}
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                @endif
+
+                <span class="hljs-comment">&lt;!-- Oferta --&gt;</span>
+                @if($product[&#x27;offer&#x27;] !== null)
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-6&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm text-gray-500&quot;</span>&gt;</span>Oferta activa:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-2&quot;</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;inline-block bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full&quot;</span>&gt;</span>
+                                        🏷️ {{ $product[&#x27;offer&#x27;][&#x27;name&#x27;] }} (-{{ $product[&#x27;offer&#x27;][&#x27;discount_percentage&#x27;] }}%)
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                        @endif
+
+                <span class="hljs-comment">&lt;!-- Botones de Acción --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex space-x-4&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;cart.store&#x27;) }}&quot;</span>
+                       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition&quot;</span>&gt;</span>
+                        🛒 Añadir al Carrito
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.index&#x27;) }}&quot;</span>
+                       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border border-primary-600 text-primary-600 px-6 py-3 rounded-lg hover:bg-primary-50 transition&quot;</span>&gt;</span>
+                        ← Volver a Productos
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="4-vista-de-lista-de-categorías"><strong>4. Vista de Lista de Categorías</strong></h3>
+<p>Esta vista permite a los usuarios descubrir y explorar todas las categorías disponibles en la tienda, facilitando la navegación y el acceso a los productos organizados por temática o tipo.</p>
+<p>Cada categoría se representa mediante el componente <code>CategoryCard</code>, lo que garantiza coherencia visual y facilita el mantenimiento del código.</p>
+<p>Crea el archivo <code>resources/views/categories/index.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/categories/index.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Categorías - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>Nuestras Categorías<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600&quot;</span>&gt;</span>Explora nuestros productos por categoría.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6&quot;</span>&gt;</span>
+            @forelse($categories as $category)
+                <span class="hljs-tag">&lt;<span class="hljs-name">x-category-card</span> <span class="hljs-attr">:category</span>=<span class="hljs-string">&quot;$category&quot;</span> /&gt;</span>
+            @empty
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-span-full text-center py-12&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay categorías disponibles.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            @endforelse
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="5-vista-de-productos-por-categoría"><strong>5. Vista de Productos por Categoría</strong></h3>
+<p>Esta vista está diseñada para mostrar todos los productos que pertenecen a una categoría específica, facilitando que los usuarios puedan explorar el catálogo de la tienda de manera temática o por tipo de producto.</p>
+<p>Cada producto se representa mediante el componente <code>ProductCard</code>, lo que garantiza coherencia visual, facilita el mantenimiento y promueve la reutilización del código.</p>
+<p>Crea el archivo <code>resources/views/categories/show.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/categories/show.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, $category[&#x27;name&#x27;] . &#x27; - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>{{ $category[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-4&quot;</span>&gt;</span>{{ $category[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;categories.index&#x27;) }}&quot;</span>
+               <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-primary-600 hover:text-primary-700 transition&quot;</span>&gt;</span>
+                ← Volver a Categorías
+            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        @if(!empty($categoryProducts))
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6&quot;</span>&gt;</span>
+            @foreach($categoryProducts as $product)
+                    <span class="hljs-tag">&lt;<span class="hljs-name">x-product-card</span> <span class="hljs-attr">:product</span>=<span class="hljs-string">&quot;$product&quot;</span> /&gt;</span>
+                            @endforeach
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                                @else
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center py-12&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay productos en esta categoría.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                        @endif
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="6-vista-de-lista-de-ofertas"><strong>6. Vista de Lista de Ofertas</strong></h3>
+<p>Esta vista está diseñada para mostrar todas las ofertas especiales activas en la tienda, permitiendo a los usuarios identificar rápidamente descuentos y promociones vigentes.</p>
+<p>Crea el archivo <code>resources/views/offers/index.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/offers/index.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Ofertas - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>Ofertas Especiales<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600&quot;</span>&gt;</span>Descubre nuestras mejores ofertas y descuentos.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6&quot;</span>&gt;</span>
+            @forelse($offers as $offer)
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg p-6 border-l-4 border-orange-500&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl font-bold text-gray-900 mb-2&quot;</span>&gt;</span>{{ $offer[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600 mb-4&quot;</span>&gt;</span>{{ $offer[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-orange-600 mb-4&quot;</span>&gt;</span>
+                        {{ $offer[&#x27;discount_percentage&#x27;] }}% de descuento
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;offers.show&#x27;, $offer[&#x27;id&#x27;]) }}&quot;</span>
+                       <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition&quot;</span>&gt;</span>
+                        Ver Productos
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            @empty
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-span-full text-center py-12&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay ofertas disponibles.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            @endforelse
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="7-vista-de-detalle-de-oferta"><strong>7. Vista de Detalle de Oferta</strong></h3>
+<p>Esta vista muestra el detalle de una oferta específica y todos los productos que tienen aplicada esa oferta. Es útil para que los usuarios puedan ver de un vistazo todos los productos con descuento de una promoción concreta.</p>
+<p>Crea el archivo <code>resources/views/offers/show.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/offers/show.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, $offer[&#x27;name&#x27;] . &#x27; - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- Header de la Oferta --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gradient-to-r from-orange-500 to-red-500 rounded-lg shadow-lg p-8 mb-8 text-white&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex items-center justify-between&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl font-bold mb-2&quot;</span>&gt;</span>{{ $offer[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl&quot;</span>&gt;</span>{{ $offer[&#x27;description&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white text-orange-600 rounded-full w-32 h-32 flex items-center justify-center&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-4xl font-bold&quot;</span>&gt;</span>{{ $offer[&#x27;discount_percentage&#x27;] }}%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm&quot;</span>&gt;</span>OFF<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-comment">&lt;!-- Productos con esta oferta --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-gray-900 mb-6&quot;</span>&gt;</span>Productos en Oferta<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+
+            @if(!empty($offerProducts))
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6&quot;</span>&gt;</span>
+                    @foreach($offerProducts as $product)
+                        <span class="hljs-tag">&lt;<span class="hljs-name">x-product-card</span> <span class="hljs-attr">:product</span>=<span class="hljs-string">&quot;$product&quot;</span> /&gt;</span>
+                    @endforeach
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            @else
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center py-12 bg-gray-100 rounded-lg&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>No hay productos con esta oferta actualmente.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            @endif
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-comment">&lt;!-- Botón volver --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-8&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;offers.index&#x27;) }}&quot;</span>
+               <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;inline-block bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition&quot;</span>&gt;</span>
+                ← Volver a Ofertas
+            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="8-vista-del-carrito"><strong>8. Vista del Carrito</strong></h3>
+<p>Esta vista está diseñada para ofrecer al usuario una experiencia completa de gestión del carrito de compras. Permite visualizar de manera clara todos los productos que ha añadido, y realizar acciones sobre ellos antes de finalizar la compra.</p>
+<p>Crea el archivo <code>resources/views/cart/index.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/cart/index.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Carrito - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>Mi Carrito<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600&quot;</span>&gt;</span>Revisa los productos que has seleccionado.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        @if(!empty($cartItems))
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg overflow-hidden&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;overflow-x-auto&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;min-w-full divide-y divide-gray-200&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">thead</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-gray-50&quot;</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider&quot;</span>&gt;</span>
+                                    Producto
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider&quot;</span>&gt;</span>
+                                    Precio
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider&quot;</span>&gt;</span>
+                                    Cantidad
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider&quot;</span>&gt;</span>
+                                    Total
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white divide-y divide-gray-200&quot;</span>&gt;</span>
+                            @foreach($cartItems as $item)
+                                <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-4 whitespace-nowrap&quot;</span>&gt;</span>
+                                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-sm font-medium text-gray-900&quot;</span>&gt;</span>{{ $item[&#x27;name&#x27;] }}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-4 whitespace-nowrap text-sm text-gray-900&quot;</span>&gt;</span>
+                                        €{{ $item[&#x27;price&#x27;] }}
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-4 whitespace-nowrap text-sm text-gray-900&quot;</span>&gt;</span>
+                                        {{ $item[&#x27;quantity&#x27;] }}
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900&quot;</span>&gt;</span>
+                                        €{{ $item[&#x27;price&#x27;] * $item[&#x27;quantity&#x27;] }}
+                                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                                <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+            @endforeach
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    @else
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center py-12&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 text-lg&quot;</span>&gt;</span>Tu carrito está vacío.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;products.index&#x27;) }}&quot;</span>
+                   <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-4 inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition&quot;</span>&gt;</span>
+                    Ver Productos
+            <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    @endif
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="9-vista-de-contacto"><strong>9. Vista de Contacto</strong></h3>
+<p>La vista de <strong>contacto</strong> (<code>resources/views/contact.blade.php</code>) contendrá un formulario de contacto para que los usuarios puedan enviar mensajes a la tienda.</p>
+<p>En esta primera versión, la vista mostrará un mensaje de &quot;En construcción&quot; con un diseño atractivo, animación y un botón para volver al inicio.</p>
+<p>Más adelante, aquí se podrá implementar un formulario real con campos como nombre, email, mensaje y validación de datos.</p>
+<p>Crea el archivo <code>resources/views/contact.blade.php</code>:</p>
+<pre><code class="language-bash"><span class="hljs-built_in">touch</span> resources/views/contact.blade.php
+</code></pre>
+<p>::: details Código PHP</p>
+<pre><code class="language-html">@extends(&#x27;layouts.app&#x27;)
+
+@section(&#x27;title&#x27;, &#x27;Contacto - Mi Tienda&#x27;)
+
+@section(&#x27;content&#x27;)
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container mx-auto px-6 py-8&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;max-w-2xl mx-auto&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-8 text-center&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-3xl font-bold text-gray-900 mb-4&quot;</span>&gt;</span>Contacta con Nosotros<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-600&quot;</span>&gt;</span>Estamos aquí para ayudarte. Envíanos un mensaje.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bg-white rounded-lg shadow-lg p-8 flex flex-col items-center justify-center&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;w-20 h-20 text-primary-600 mb-4 animate-bounce&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">&quot;currentColor&quot;</span> <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">viewBox</span>=<span class="hljs-string">&quot;0 0 48 48&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">&quot;24&quot;</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">&quot;24&quot;</span> <span class="hljs-attr">r</span>=<span class="hljs-string">&quot;22&quot;</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">&quot;currentColor&quot;</span> <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">&quot;4&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;#e0e7ff&quot;</span>/&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M16 32l8-8 8 8&quot;</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">&quot;currentColor&quot;</span> <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">stroke-linecap</span>=<span class="hljs-string">&quot;round&quot;</span> <span class="hljs-attr">stroke-linejoin</span>=<span class="hljs-string">&quot;round&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">path</span> <span class="hljs-attr">d</span>=<span class="hljs-string">&quot;M24 16v8&quot;</span> <span class="hljs-attr">stroke</span>=<span class="hljs-string">&quot;currentColor&quot;</span> <span class="hljs-attr">stroke-width</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">stroke-linecap</span>=<span class="hljs-string">&quot;round&quot;</span> <span class="hljs-attr">stroke-linejoin</span>=<span class="hljs-string">&quot;round&quot;</span> <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;none&quot;</span>/&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-2xl font-bold text-gray-800 mb-2&quot;</span>&gt;</span>¡En Construcción!<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-gray-500 mb-4&quot;</span>&gt;</span>Estamos trabajando para traerte esta funcionalidad muy pronto.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;{{ route(&#x27;welcome&#x27;) }}&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;inline-block mt-2 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition&quot;</span>&gt;</span>
+                    Volver al inicio
+                <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@endsection
+</code></pre>
+<p>:::</p>
+<h3 id="estructura-final-de-vistas"><strong>Estructura Final de Vistas</strong></h3>
+<pre><code class="language-text">resources/views/
+├── layouts/
+│   └── app.blade.php          # Layout maestro
+├── partials/
+│   ├── head.blade.php         # Meta tags y configuración
+│   ├── header.blade.php       # Encabezado de página
+│   ├── navigation.blade.php   # Navegación principal
+│   └── footer.blade.php       # Pie de página
+├── components/
+│   ├── product-card.blade.php # Componente de tarjeta de producto
+│   └── category-card.blade.php # Componente de tarjeta de categoría
+├── products/
+│   ├── index.blade.php        # Lista de productos
+│   └── show.blade.php         # Detalle de producto
+├── categories/
+│   ├── index.blade.php        # Lista de categorías
+│   └── show.blade.php         # Productos de categoría
+├── offers/
+│   ├── index.blade.php        # Lista de ofertas
+│   └── show.blade.php         # Detalle de oferta con productos
+├── cart/
+│   └── index.blade.php        # Carrito de compras
+├── contact.blade.php          # Página de contacto
+└── welcome.blade.php          # Página de bienvenida
+</code></pre>
+<h2 id="fase-9-probar-la-aplicación">FASE 9: Probar la Aplicación</h2>
+<h3 id="1-verificar-las-rutas"><strong>1. Verificar las Rutas</strong></h3>
+<p>Comprobar que cada ruta funciona correctamente y muestra el contenido esperado.</p>
+<p>Visita las siguientes URLs en tu navegador:</p>
+<ul>
+<li><strong>Página de inicio</strong>: <code>http://localhost</code></li>
+<li><strong>Lista de productos</strong>: <code>http://localhost/products</code></li>
+<li><strong>Productos en oferta</strong>: <code>http://localhost/products-on-sale</code></li>
+<li><strong>Producto específico</strong>: <code>http://localhost/products/1</code></li>
+<li><strong>Lista de categorías</strong>: <code>http://localhost/categories</code></li>
+<li><strong>Categoría específica</strong>: <code>http://localhost/categories/1</code></li>
+<li><strong>Lista de ofertas</strong>: <code>http://localhost/offers</code></li>
+<li><strong>Oferta específica</strong>: <code>http://localhost/offers/1</code></li>
+<li><strong>Carrito</strong>: <code>http://localhost/cart</code></li>
+<li><strong>Contacto</strong>: <code>http://localhost/contact</code></li>
+</ul>
+<div class="markdown-alert markdown-alert-caution"><p class="markdown-alert-title"><svg class="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Captura de pantalla requerida</p><p>Realiza una captura de pantalla de la página en cada ruta funcionando. La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible.</p>
+</div>
+<h3 id="2-navegación"><strong>2. Navegación</strong></h3>
+<p>Asegurar que todos los enlaces y botones funcionen correctamente, creando una experiencia de usuario fluida.</p>
+<p>Verifica que la navegación funcione correctamente:</p>
+<ul>
+<li>Los enlaces del header te llevan a las páginas correctas</li>
+<li>Los botones &quot;Ver Detalles&quot; funcionan</li>
+<li>Los enlaces de categorías filtran los productos</li>
+<li>Los componentes se muestran correctamente en todas las páginas</li>
+<li>El layout maestro se aplica consistentemente</li>
+<li>La navegación muestra el estado activo correctamente</li>
+</ul>
+<h2 id="-entrega-de-la-práctica">📋 ENTREGA DE LA PRÁCTICA</h2>
+<h3 id="requisitos-de-entrega"><strong>Requisitos de Entrega</strong></h3>
+<p>Para completar esta práctica, debes entregar un <strong>PDF</strong> que incluya las siguientes capturas de pantalla:</p>
+<div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Navegación</p><p>Estado activo de navegación funcionando correctamente debe verse en las capturas según la ruta que se esté navegando.</p>
+</div>
+<h4 id="1-archivo-de-rutas-configurado"><strong>1. Archivo de Rutas Configurado</strong></h4>
+<ul>
+<li>Captura de tu terminal mostrando el archivo <code>routes/web.php</code> editado con las nuevas rutas</li>
+<li>La captura debe incluir tu prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="2-datos-mock-personalizados"><strong>2. Datos Mock Personalizados</strong></h4>
+<ul>
+<li>Captura de tus archivos de datos mock (<code>database/data/mock-products.php</code>, <code>mock-categories.php</code>, <code>mock-offers.php</code>, etc.) <strong>ajustados a la temática que elegiste</strong> (por ejemplo, libros, ropa, electrónica, etc.)</li>
+<li>La captura debe mostrar claramente cómo personalizaste los nombres, descripciones y campos de los productos, categorías y ofertas según tu temática</li>
+<li>Incluye tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="3-página-de-inicio-funcionando"><strong>3. Página de Inicio Funcionando</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost</code> mostrando la página de bienvenida</li>
+<li>Debe mostrar la temática elegida para tu tienda</li>
+<li>Los productos destacados deben mostrar:
+<ul>
+<li>Badge naranja en esquina superior derecha con porcentaje de descuento (si tiene oferta)</li>
+<li>Borde naranja en la tarjeta (si tiene oferta)</li>
+<li>Precio original tachado y precio final en naranja (si tiene oferta)</li>
+<li>Nombre de la oferta dinámico (no hardcodeado)</li>
+</ul>
+</li>
+<li>El botón &quot;🏷️ Ofertas Especiales&quot; debe estar visible</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="4-página-de-detalle-de-producto"><strong>4. Página de Detalle de Producto</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/products/1</code> (o cualquier ID)</li>
+<li>Debe mostrar la información completa del producto</li>
+<li>Si tiene oferta, debe mostrar:
+<ul>
+<li>Precio original tachado</li>
+<li>Precio final con descuento en grande</li>
+<li>Mensaje &quot;¡Ahorra €X.XX!&quot;</li>
+<li>Badge con nombre y porcentaje de la oferta</li>
+</ul>
+</li>
+<li>El botón &quot;Añadir al carrito&quot; debe estar visible</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="5-página-de-lista-de-productos"><strong>5. Página de Lista de Productos</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/products</code> mostrando todos los productos</li>
+<li>Debe mostrar la temática elegida para tu tienda</li>
+<li>Los productos deben tener nombres, descripciones y precios personalizados</li>
+<li>Debe mostrar las ofertas de cada producto (badge naranja en esquina)</li>
+<li>Los productos con oferta deben tener borde naranja</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="6-página-de-productos-en-oferta"><strong>6. Página de Productos en Oferta</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/products-on-sale</code> mostrando solo productos con oferta</li>
+<li>Debe mostrar el banner rojo/naranja con &quot;🏷️ ¡Productos en Oferta!&quot;</li>
+<li><strong>CRÍTICO</strong>: Solo deben aparecer productos que tengan <code>offer_id !== null</code></li>
+<li>Debe mostrar el contador: &quot;Mostrando X productos en oferta&quot;</li>
+<li>Todos los productos deben tener destacado visual (badges, bordes, precios tachados)</li>
+<li>NO debe haber productos sin oferta en esta vista</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="7-página-de-lista-de-categorías"><strong>7. Página de Lista de Categorías</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/categories</code> mostrando todas las categorías</li>
+<li>Debe mostrar las categorías personalizadas según tu temática</li>
+<li>Cada categoría debe tener nombre y descripción personalizados</li>
+<li>Los enlaces &quot;Ver Productos&quot; deben funcionar correctamente</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="8-página-de-productos-por-categoría"><strong>8. Página de Productos por Categoría</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/categories/1</code> (o cualquier ID)</li>
+<li>Debe mostrar solo los productos de esa categoría</li>
+<li>Navegación entre categorías funcionando</li>
+<li>Los productos con ofertas deben mostrar destacado visual completo:
+<ul>
+<li>Badge de descuento dinámico en esquina</li>
+<li>Precio tachado + precio final</li>
+<li>Nombre de oferta desde los mocks (no hardcodeado)</li>
+</ul>
+</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="9-página-de-lista-de-ofertas"><strong>9. Página de Lista de Ofertas</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/offers</code> mostrando todas las ofertas</li>
+<li>Debe mostrar las ofertas personalizadas según tu temática</li>
+<li>Cada oferta debe tener nombre, descripción y porcentaje de descuento</li>
+<li>Los enlaces &quot;Ver Productos&quot; deben funcionar correctamente</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="10-página-de-detalle-de-oferta"><strong>10. Página de Detalle de Oferta</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/offers/1</code> (o cualquier ID)</li>
+<li>Debe mostrar el header destacado con el porcentaje de descuento</li>
+<li>Debe mostrar todos los productos que tienen aplicada esa oferta</li>
+<li>Los productos deben mostrarse usando el componente ProductCard con destacado visual</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="11-página-del-carrito"><strong>11. Página del Carrito</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/cart</code> mostrando el carrito de compras</li>
+<li>Debe mostrar los productos añadidos al carrito</li>
+<li>Debe mostrar precios, cantidades y totales</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h4 id="12-página-de-contacto"><strong>12. Página de Contacto</strong></h4>
+<ul>
+<li>Captura de <code>http://localhost/contact</code> mostrando la página de contacto</li>
+<li>Debe mostrar el mensaje &quot;En construcción&quot; con diseño atractivo</li>
+<li>El botón &quot;Volver al inicio&quot; debe funcionar correctamente</li>
+<li>La captura debe incluir tu terminal con el prompt <code>usuario@equipo:~/ruta/proyecto$</code> visible</li>
+</ul>
+<h3 id="-instrucciones-de-entrega"><strong>📤 Instrucciones de Entrega</strong></h3>
+<ol>
+<li><strong>Formato</strong>: Entregar un único archivo PDF con todas las capturas</li>
+<li><strong>Organización</strong>: Incluir un título para cada captura explicando qué muestra</li>
+<li><strong>Calidad</strong>: Las capturas deben ser claras y legibles</li>
+<li><strong>Personalización</strong>: La tienda debe reflejar claramente la temática elegida con datos personalizados</li>
+<li><strong>Funcionalidad</strong>: Todas las rutas y navegación deben funcionar correctamente</li>
+<li><strong>Terminal</strong>: Todas las capturas deben incluir el prompt del terminal visible</li>
+<li><strong>Completitud</strong>: Deben mostrarse todas las vistas creadas (inicio, productos, categorías, ofertas, carrito, contacto)</li>
+<li><strong>Datos personalizados</strong>: Los productos, categorías y ofertas deben estar adaptados a tu temática específica</li>
+</ol>
+<h3 id="-plataforma-de-entrega"><strong>🔗 Plataforma de Entrega</strong></h3>
+<p><strong>Entrega en Aules</strong></p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
