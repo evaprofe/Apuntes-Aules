@@ -2,7 +2,6 @@
 layout: doc
 sidebar: true
 ---
-
 # UD.2 Práctica Guiada: Rutas, Controladores y Vistas
 
 (Prácticas de Guillermo Garrido modificadas por Eva María Gómez Abad - Curso  2025-2026)
@@ -15,7 +14,7 @@ El objetivo de esta práctica es construir una tienda online completa utilizando
 
 Esta práctica está diseñada para ser genérica y personalizable. A partir de la temática elegida en la práctica anterior se adaptaran todos los nombres, categorías y productos según el tipo de tienda.
 
------
+---
 
 ## FASE 1: Iniciar el Entorno de Desarrollo
 
@@ -432,13 +431,9 @@ trait LoadsMockData
 En esta fase vamos a crear los siguientes controladores, cada uno con una responsabilidad clara dentro de la arquitectura MVC de nuestra tienda online:
 
 - **WelcomeController**: Este controlador gestionará la página de inicio (welcome) de la tienda online. Mostrará contenido destacado, información general y enlaces a las diferentes secciones principales de la tienda.
-
 - **ProductController**: Se encargará de gestionar todo lo relacionado con los productos. Mostrará la página principal con el listado de productos, el detalle de un producto concreto y permitirá filtrar productos por categoría si es necesario.
-
 - **CategoryController**: Este controlador gestionará las categorías de productos. Permitirá mostrar todos los productos de una categoría específica y navegar entre diferentes categorías.
-
 - **OfferController**: Su función será mostrar la información de las ofertas disponibles y, si se desea, filtrar productos que tengan una oferta concreta.
-
 - **CartController**: Se encargará de la gestión del carrito de la compra. Mostrará el estado actual del carrito, los productos añadidos, cantidades y permitirá ver el detalle de un carrito específico.
 
 Cada uno de estos controladores nos ayudará a organizar la lógica de la aplicación, facilitando el mantenimiento y la escalabilidad del proyecto.
@@ -685,7 +680,6 @@ El `CategoryController` es el encargado de gestionar todas las operaciones relac
 #### Métodos implementados en `CategoryController`
 
 - **index()**: Este método muestra un listado de todas las categorías disponibles en la tienda. Es útil para que el usuario pueda navegar por las diferentes categorías.
-
 - **show($id)**: Muestra todos los productos de una categoría específica. Si la categoría no existe, devuelve un error 404.
 
 En resumen, el `CategoryController` organiza y facilita la navegación por categorías y sus productos. Esto mejora la experiencia del usuario al explorar el catálogo de la tienda online.
@@ -760,7 +754,6 @@ El `OfferController` es el encargado de gestionar las operaciones relacionadas c
 #### Métodos implementados en `OfferController`
 
 - **index()**: Muestra un listado de todas las ofertas disponibles.
-
 - **show($id)**: Muestra el detalle de una oferta específica y los productos que tienen esa oferta.
 
 A continuación, se muestra la implementación completa del `OfferController` con los métodos mencionados, utilizando los datos mock para simular el comportamiento de la tienda.
@@ -835,9 +828,7 @@ El `CartController` es el encargado de gestionar todas las operaciones relaciona
 #### Métodos implementados en `CartController`
 
 - **index()**: Este método muestra un resumen del carrito de la compra, incluyendo los productos añadidos, sus nombres y precios. Es útil para que el usuario pueda revisar el contenido de su carrito antes de finalizar la compra.
-
 - **store(Request $request)**: Este método añade un nuevo producto al carrito. Valida que la cantidad sea un número entre 0 y 99. En una aplicación real, guardaría el producto en la sesión o base de datos del carrito.
-
 - **update(Request $request, $id)**: Este método actualiza la cantidad de un producto existente en el carrito. Valida que la cantidad sea un número entre 0 y 99. Si la cantidad es 0, se eliminaría el producto del carrito.
 
 En resumen, el `CartController` facilita la gestión del carrito de la compra, permitiendo añadir productos y actualizar cantidades con validación adecuada.
@@ -948,51 +939,10 @@ Las rutas que vamos a crear son:
 
 Abre el archivo `routes/web.php` y reemplaza el contenido por las siguientes rutas:
 
-::: details Código de las rutas
+::: details Código de las rutas-ToDo
 
 ```php
-<?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\OfferController;
-use App\Http\Controllers\CartController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-// Welcome page - shows home page with featured content
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-
-// Contact page
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-
-// Category routes
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
-
-// Cart routes
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-Route::put('/cart/{id}', [CartController::class, 'update'])
-    ->where('id', '[0-9]+')
-    ->name('cart.update');
-
-// Special route for products on sale (must be BEFORE resource routes to avoid conflicts)
-Route::get('/products-on-sale', [ProductController::class, 'onSale'])->name('products.on-sale');
-
-// Resource routes - Example with products (creates all CRUD routes automatically)
-Route::resource('products', ProductController::class);
-
-// OfferController: only index y show
-Route::resource('offers', OfferController::class)->only(['index', 'show']);
+//ToDo-Realiza el archivo de rutas
 ```
 
 :::
@@ -1237,7 +1187,7 @@ touch resources/views/partials/footer.blade.php
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+                <p>© 2025 Mi Tienda. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
