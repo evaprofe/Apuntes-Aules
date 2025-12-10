@@ -1697,7 +1697,4 @@ Para completar esta práctica, debes entregar un **PDF** que incluya las siguien
 
 ### **🔗 Plataforma de Entrega**
 
-**Entrega en Aules**cd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
-git push -u origin maincd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
-git branch backup-maincd "c:\Users\Administrador\OneDrive - Conselleria d'Educació\CURSOS_MOODLE\MP_0613_DWES_EVAGO\Apuntes\UD12-Laravel\Apuntes-Aules"
-git branch backup-main
+**Entrega en Aules**
